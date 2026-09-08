@@ -10,18 +10,18 @@ export function Breadcrumbs({ path }: { path: string[] }) {
   const visibleSegments = isCollapsed ? path.slice(-2) : path;
 
   return (
-    <nav className="flex items-center space-x-1 text-sm text-neutral-500 font-medium overflow-hidden">
+    <nav className="flex items-center space-x-1 text-sm text-muted-foreground font-medium overflow-hidden">
       <Link 
         href="/files" 
-        className="p-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-md transition-colors flex items-center"
+        className="p-1 hover:bg-surface-2 rounded-md transition-colors flex items-center"
       >
         <Home size={18} strokeWidth={2} />
       </Link>
       
       {isCollapsed && (
         <>
-          <ChevronRight size={14} className="text-neutral-300" />
-          <button className="p-1 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-md">
+          <ChevronRight size={14} className="text-muted-foreground/40" />
+          <button className="p-1 hover:bg-surface-2 rounded-md">
             <MoreHorizontal size={14} />
           </button>
         </>
@@ -34,14 +34,14 @@ export function Breadcrumbs({ path }: { path: string[] }) {
 
         return (
           <React.Fragment key={href}>
-            <ChevronRight size={14} className="text-neutral-300 shrink-0" />
+            <ChevronRight size={14} className="text-muted-foreground/40 shrink-0" />
             <Link 
               href={href} 
               className={cn(
                 "px-1.5 py-1 rounded-md transition-colors truncate max-w-[120px] md:max-w-[200px]",
-                isLast 
-                  ? "text-neutral-900 dark:text-neutral-100 font-bold" 
-                  : "hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                isLast
+                  ? "text-foreground font-bold"
+                  : "hover:bg-surface-2"
               )}
             >
               {decodeURIComponent(segment)}

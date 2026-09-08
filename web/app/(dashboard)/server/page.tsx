@@ -125,7 +125,7 @@ export default function ServerPage() {
   if (!isServerUnlocked) {
     return (
       <div className="h-[75vh] flex items-center justify-center p-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-         <div className="bg-card border border-neutral-200 dark:border-neutral-800 rounded-[2.5rem] p-8 md:p-12 w-full max-w-md shadow-2xl space-y-8 text-center relative overflow-hidden">
+         <div className="bg-card border border-border/50 rounded-xl p-8 md:p-12 w-full max-w-md shadow-2xl space-y-8 text-center relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-1.5 bg-primary/20" />
             
             <div className="space-y-4">
@@ -136,26 +136,26 @@ export default function ServerPage() {
                   </div>
                </div>
                <div>
-                  <h2 className="text-2xl font-black tracking-tight">System Guard</h2>
-                  <p className="text-[10px] text-neutral-400 font-black uppercase tracking-[0.2em] mt-1">Master Password Required</p>
+                  <h2 className="text-2xl font-display font-bold tracking-tight">System Guard</h2>
+                  <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider mt-1">Master Password Required</p>
                </div>
             </div>
 
             <div className="space-y-4">
                <div className="relative group">
-                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400 group-focus-within:text-primary transition-colors" size={18} />
+                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60 group-focus-within:text-primary transition-colors" size={18} />
                   <input 
                     type="password"
                     placeholder="Enter Master Password..."
                     value={unlockPassword}
                     onChange={(e) => setUnlockPassword(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && unlockMutation.mutate(unlockPassword)}
-                    className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl pl-12 pr-4 h-14 text-sm font-bold focus:ring-4 focus:ring-primary/10 outline-none transition-all"
+                    className="w-full bg-surface-2 dark:bg-card border border-border/50 rounded-2xl pl-12 pr-4 h-14 text-sm font-bold focus:ring-4 focus:ring-primary/10 outline-none transition-all"
                     autoFocus
                   />
                </div>
                <Button 
-                className="w-full h-14 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-primary/20 transition-all active:scale-[0.98]"
+                className="w-full h-14 rounded-2xl font-semibold uppercase tracking-wider text-xs shadow-xl shadow-primary/20 transition-all active:scale-[0.98]"
                 disabled={!unlockPassword || unlockMutation.isPending}
                 onClick={() => unlockMutation.mutate(unlockPassword)}
                >
@@ -163,7 +163,7 @@ export default function ServerPage() {
                </Button>
             </div>
 
-            <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest leading-relaxed">
+            <p className="text-[11px] text-muted-foreground/60 font-bold uppercase tracking-wider leading-relaxed">
                Elevated privileges required for <br/> systemd service management
             </p>
          </div>
@@ -198,18 +198,18 @@ export default function ServerPage() {
   };
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto bg-[#fafafa] dark:bg-neutral-950 scrollbar-none pb-20 md:pb-8">
+    <div className="flex flex-col h-full overflow-y-auto bg-background scrollbar-none pb-20 md:pb-8">
       
       {/* 1. Slim Header (Matches Analytics) */}
       <header className="px-6 pt-8 pb-6 md:px-10 md:pt-10 md:pb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
            <div className="flex items-center space-x-2 mb-1">
               <div className="w-8 h-1 bg-primary rounded-full" />
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">System Core</span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-primary">System Core</span>
            </div>
-           <h1 className="text-3xl md:text-4xl font-black tracking-tight text-neutral-900 dark:text-neutral-50 flex items-center space-x-3">
-             <span>Server <span className="text-neutral-400 dark:text-neutral-600">Control</span></span>
-             <div className="px-2 py-1 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full text-[9px] font-black uppercase tracking-widest flex items-center mb-1">
+           <h1 className="text-3xl md:text-4xl font-display font-bold tracking-tight text-foreground flex items-center space-x-3">
+             <span>Server <span className="text-muted-foreground/60 dark:text-muted-foreground">Control</span></span>
+             <div className="px-2 py-1 bg-green-500/10 text-green-500 border border-green-500/20 rounded-full text-[10px] font-semibold uppercase tracking-wider flex items-center mb-1">
                <ShieldCheck size={10} className="mr-1" />
                Auth
              </div>
@@ -218,19 +218,19 @@ export default function ServerPage() {
         
         <div className="flex items-center space-x-2">
            <div className="relative flex-1 md:flex-none">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400" size={16} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground/60" size={16} />
               <input 
                 type="text"
                 placeholder="Search units..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-9 pr-4 h-10 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none w-full md:w-56 transition-all shadow-sm"
+                className="pl-9 pr-4 h-10 bg-card border border-border/50 rounded-xl text-sm font-medium focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none w-full md:w-56 transition-all shadow-sm"
               />
            </div>
            <Button 
               variant="outline" 
               size="icon" 
-              className="h-10 w-10 rounded-xl bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 shadow-sm hover:text-red-500 hover:border-red-500/30"
+              className="h-10 w-10 rounded-xl bg-card border-border/50 shadow-sm hover:text-red-500 hover:border-red-500/30"
               onClick={() => setServerUnlocked(false)}
               title="Lock Server"
            >
@@ -239,7 +239,7 @@ export default function ServerPage() {
            <Button 
               variant="outline" 
               size="icon" 
-              className="h-10 w-10 rounded-xl bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 shadow-sm text-primary"
+              className="h-10 w-10 rounded-xl bg-card border-border/50 shadow-sm text-primary"
               onClick={() => queryClient.invalidateQueries({ queryKey: ["server-services"] })}
            >
               <RefreshCw size={16} className={cn(isRefetching && "animate-spin")} />
@@ -259,7 +259,7 @@ export default function ServerPage() {
 
       {/* 3. Control Bar (Compact) */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-2">
-         <div className="flex items-center space-x-1 p-1 bg-white dark:bg-neutral-900 rounded-xl w-full sm:w-auto border border-neutral-200 dark:border-neutral-800 overflow-x-auto no-scrollbar shadow-sm">
+         <div className="flex items-center space-x-1 p-1 bg-card rounded-xl w-full sm:w-auto border border-border/50 overflow-x-auto no-scrollbar shadow-sm">
             {[
                { id: "all", label: "All" },
                { id: "active", label: "Live" },
@@ -270,10 +270,10 @@ export default function ServerPage() {
                   key={f.id}
                   onClick={() => setStatusFilter(f.id as any)}
                   className={cn(
-                     "flex-1 sm:flex-none flex items-center justify-center px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-widest transition-all whitespace-nowrap",
+                     "flex-1 sm:flex-none flex items-center justify-center px-4 py-1.5 rounded-lg text-[10px] font-semibold uppercase tracking-wider transition-all whitespace-nowrap",
                      statusFilter === f.id 
-                        ? "bg-neutral-100 dark:bg-neutral-800 text-primary shadow-sm border border-neutral-200/50 dark:border-neutral-700" 
-                        : "text-neutral-500 hover:text-neutral-900 dark:hover:text-neutral-100 border border-transparent"
+                        ? "bg-surface-2 dark:bg-surface-2 text-primary shadow-sm border border-border/50 dark:border-border/50" 
+                        : "text-muted-foreground hover:text-foreground dark:hover:text-foreground/80 border border-transparent"
                   )}
                >
                   {f.label}
@@ -286,15 +286,15 @@ export default function ServerPage() {
       {isLoading ? (
         <div className="py-20 text-center space-y-4">
           <Loader2 className="animate-spin mx-auto text-primary" size={32} />
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-400">Syncing with systemd...</p>
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground/60">Syncing with systemd...</p>
         </div>
       ) : filteredServices?.length === 0 ? (
-        <div className="py-20 text-center bg-white dark:bg-neutral-900 border border-dashed border-neutral-200 dark:border-neutral-800 rounded-[2rem]">
-          <FileQuestion className="mx-auto text-neutral-300 mb-4" size={40} strokeWidth={1.5} />
-          <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">No matching services found</p>
+        <div className="py-20 text-center bg-card border border-dashed border-border/50 rounded-xl">
+          <FileQuestion className="mx-auto text-muted-foreground/40 mb-4" size={40} strokeWidth={1.5} />
+          <p className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60">No matching services found</p>
         </div>
       ) : (
-        <div className="bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-3xl shadow-sm flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-500 mb-6">
+        <div className="bg-card border border-border/50 rounded-3xl shadow-sm flex flex-col animate-in fade-in slide-in-from-bottom-2 duration-500 mb-6">
           <div className="flex-1 overflow-hidden py-2">
             {filteredServices?.map((service) => (
               <ServiceCard 
@@ -317,59 +317,59 @@ export default function ServerPage() {
       {/* Log Viewer Modal */}
       {showLogs && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-0 md:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-300">
-           <div className="bg-neutral-950 border border-neutral-800 w-full max-w-4xl h-full md:h-[85vh] md:rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden">
+           <div className="bg-background border border-border/30 w-full max-w-4xl h-full md:h-[85vh] md:rounded-xl shadow-2xl flex flex-col overflow-hidden">
               {/* Modal Header */}
-              <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-800 bg-neutral-900/50">
+              <div className="flex items-center justify-between px-6 py-5 border-b border-border/30 bg-card/50">
                  <div className="flex items-center space-x-4">
                     <div className="p-2 bg-primary/20 text-primary rounded-xl">
                       <Terminal size={20} />
                     </div>
                     <div>
-                       <h3 className="text-sm md:text-base font-black text-white tracking-tight">{selectedService}</h3>
-                       <p className="text-[9px] text-neutral-500 font-bold uppercase tracking-[0.2em] mt-0.5">Live Journal Stream</p>
+                       <h3 className="text-sm md:text-base font-semibold text-foreground tracking-tight">{selectedService}</h3>
+                       <p className="text-[11px] text-muted-foreground font-bold uppercase tracking-wider mt-0.5">Live Journal Stream</p>
                     </div>
                  </div>
                  <button 
                   onClick={() => setShowLogs(false)}
-                  className="p-3 bg-neutral-800 hover:bg-neutral-700 rounded-2xl text-white transition-all active:scale-90"
+                  className="p-3 bg-surface-2 hover:bg-surface-2/80 rounded-2xl text-foreground transition-all active:scale-90"
                  >
                     <X size={20} />
                  </button>
               </div>
 
               {/* Modal Body (Logs) */}
-              <div className="flex-1 p-4 md:p-8 overflow-y-auto font-mono text-[10px] md:text-[11px] leading-relaxed scrollbar-thin scrollbar-thumb-neutral-800 scrollbar-track-transparent bg-black">
+              <div className="flex-1 p-4 md:p-8 overflow-y-auto font-mono text-[10px] md:text-[11px] leading-relaxed scrollbar-thin scrollbar-thumb-surface-2 scrollbar-track-transparent bg-black">
                  {logsLoading && !logsData ? (
-                   <div className="h-full flex flex-col items-center justify-center space-y-4 text-neutral-500">
+                   <div className="h-full flex flex-col items-center justify-center space-y-4 text-muted-foreground">
                       <Loader2 className="animate-spin text-primary" size={32} />
-                      <span className="text-[10px] font-black uppercase tracking-[0.3em]">Connecting to buffer...</span>
+                      <span className="text-[11px] font-semibold uppercase tracking-wider">Connecting to buffer...</span>
                    </div>
                  ) : (
                    <div className="space-y-1.5">
                       {logsData?.logs.map((log, i) => (
-                        <div key={i} className="text-neutral-400 hover:bg-white/5 transition-colors px-2 py-0.5 rounded flex items-start group">
-                           <span className="text-neutral-700 mr-4 select-none shrink-0 w-6 text-right group-hover:text-primary transition-colors">{i + 1}</span>
+                        <div key={i} className="text-muted-foreground/60 hover:bg-white/5 transition-colors px-2 py-0.5 rounded flex items-start group">
+                           <span className="text-muted-foreground/80 mr-4 select-none shrink-0 w-6 text-right group-hover:text-primary transition-colors">{i + 1}</span>
                            <span className="break-all">{log}</span>
                         </div>
                       ))}
                       <div ref={logEndRef} />
-                      {logsData?.logs.length === 0 && <p className="text-neutral-500 italic text-center py-20 font-sans">No recent activity detected.</p>}
+                      {logsData?.logs.length === 0 && <p className="text-muted-foreground italic text-center py-20 font-sans">No recent activity detected.</p>}
                    </div>
                  )}
               </div>
 
               {/* Modal Footer */}
-              <div className="px-6 py-5 border-t border-neutral-800 bg-neutral-900/50 flex justify-between items-center">
+              <div className="px-6 py-5 border-t border-border/30 bg-card/50 flex justify-between items-center">
                  <div className="flex items-center space-x-3">
                     <div className="flex items-center space-x-2">
                        <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
-                       <p className="text-[10px] font-black text-neutral-400 uppercase tracking-widest">Live Updates Active</p>
+                       <p className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">Live Updates Active</p>
                     </div>
                  </div>
                  <Button 
                    size="sm" 
                    variant="outline" 
-                   className="h-10 rounded-xl border-neutral-700 text-neutral-300 hover:bg-neutral-800 font-bold" 
+                   className="h-10 rounded-xl border-border/50 text-muted-foreground/40 hover:bg-surface-2 font-bold" 
                    onClick={() => queryClient.invalidateQueries({ queryKey: ["service-logs", selectedService] })}
                  >
                     <RefreshCw size={14} className="mr-2" />
@@ -401,7 +401,7 @@ function ServiceCard({
   onLogs
 }: ServiceCardProps) {
   return (
-    <div className="group relative transition-all duration-200 flex items-center justify-between p-3.5 hover:bg-neutral-50 dark:hover:bg-neutral-800/50 rounded-2xl mx-2">
+    <div className="group relative transition-all duration-200 flex items-center justify-between p-3.5 hover:bg-surface-1 transition-colors duration-150 rounded-2xl mx-2">
       <div className="flex items-center flex-1 min-w-0 space-x-4">
         {/* Icon */}
         <div className="shrink-0">
@@ -409,7 +409,7 @@ function ServiceCard({
             "w-10 h-10 rounded-[10px] flex items-center justify-center shrink-0 border",
             service.active_state === "active" 
               ? "bg-emerald-50 dark:bg-emerald-900/10 text-emerald-500 border-emerald-100 dark:border-emerald-900/30" 
-              : "bg-neutral-50 dark:bg-neutral-800 text-neutral-400 border-neutral-100 dark:border-neutral-700"
+              : "bg-surface-1 dark:bg-surface-2 text-muted-foreground/60 border-border/30 dark:border-border/50"
           )}>
             <Terminal size={18} strokeWidth={2.5} />
           </div>
@@ -418,12 +418,12 @@ function ServiceCard({
         {/* Name & Desc */}
         <div className="min-w-0 flex-1">
            <div className="flex items-center space-x-2">
-              <h3 className="font-black tracking-tight truncate text-neutral-800 dark:text-neutral-200 group-hover:text-primary transition-colors text-[13px]">
+              <h3 className="font-semibold tracking-tight truncate text-foreground dark:text-foreground group-hover:text-primary transition-colors text-[13px]">
                 {service.name}
               </h3>
               {service.is_pinned && <Pin size={10} className="text-primary fill-current" />}
            </div>
-           <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-tight truncate mt-0.5">
+           <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-tight truncate mt-0.5">
              {service.description || "No description provided"}
            </p>
         </div>
@@ -440,7 +440,7 @@ function ServiceCard({
            <ActionButton 
              icon={Pin} 
              onClick={onPin}
-             className={cn(service.is_pinned ? "text-primary fill-current" : "text-neutral-400 hover:text-primary")}
+             className={cn(service.is_pinned ? "text-primary fill-current" : "text-muted-foreground/60 hover:text-primary")}
              theme={service.is_pinned ? "primary" : "neutral"}
            />
            <ActionButton 
@@ -477,17 +477,17 @@ function CompactStatItem({ label, value, icon: Icon, theme }: any) {
       emerald: "text-emerald-500 bg-emerald-50 dark:bg-emerald-900/10",
       rose: "text-rose-500 bg-rose-50 dark:bg-rose-900/10",
       amber: "text-amber-500 bg-amber-50 dark:bg-amber-900/10",
-      gray: "text-neutral-500 bg-neutral-50 dark:bg-neutral-900/10"
+      gray: "text-muted-foreground bg-surface-1 dark:bg-surface-1/10"
    };
 
    return (
-      <div className="bg-white dark:bg-neutral-900 border border-neutral-100 dark:border-neutral-800 rounded-2xl p-4 flex items-center space-x-4 shadow-sm hover:shadow-md transition-all">
+      <div className="bg-card border border-border/50 rounded-2xl p-4 flex items-center space-x-4 shadow-sm hover:shadow-md transition-all">
          <div className={cn("p-2 rounded-xl shrink-0", colors[theme])}>
             <Icon size={18} />
          </div>
          <div className="min-w-0">
-            <p className="text-[9px] font-black text-neutral-400 uppercase tracking-[0.1em] truncate mb-0.5">{label}</p>
-            <h3 className="text-base md:text-lg font-black text-neutral-900 dark:text-neutral-100 tracking-tight truncate leading-none">
+            <p className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider truncate mb-0.5">{label}</p>
+            <h3 className="text-base md:text-lg font-semibold font-mono tabular-nums text-foreground tracking-tight truncate leading-none">
                {value}
             </h3>
          </div>
@@ -502,8 +502,8 @@ function StatusBadge({ state, subState, loadState }: { state: string, subState: 
 
   if (isNotFound) {
     return (
-      <div className="flex items-center space-x-1.5 px-2 py-1 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-500 text-[9px] font-black uppercase tracking-widest border border-neutral-200 dark:border-neutral-700">
-        <div className="w-1.5 h-1.5 rounded-full bg-neutral-400" />
+      <div className="flex items-center space-x-1.5 px-2 py-1 rounded-full bg-surface-2 dark:bg-surface-2 text-muted-foreground text-[9px] font-semibold uppercase tracking-wider border border-border/50 dark:border-border/50">
+        <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground/60" />
         <span>Missing</span>
       </div>
     );
@@ -511,16 +511,16 @@ function StatusBadge({ state, subState, loadState }: { state: string, subState: 
 
   return (
     <div className={cn(
-      "flex items-center space-x-1.5 px-2 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border",
+      "flex items-center space-x-1.5 px-2 py-1 rounded-full text-[9px] font-semibold uppercase tracking-wider border",
       isActive 
         ? "bg-emerald-50 dark:bg-emerald-900/10 text-emerald-600 dark:text-emerald-400 border-emerald-200/50 dark:border-emerald-800" 
         : isFailed 
           ? "bg-rose-50 dark:bg-rose-900/10 text-rose-600 dark:text-rose-400 border-rose-200/50 dark:border-rose-800"
-          : "bg-neutral-50 dark:bg-neutral-900/10 text-neutral-600 dark:text-neutral-400 border-neutral-200/50 dark:border-neutral-800"
+          : "bg-surface-1 dark:bg-surface-1/10 text-muted-foreground dark:text-muted-foreground/60 border-border/50 dark:border-border/50"
     )}>
       <div className={cn(
         "w-1.5 h-1.5 rounded-full animate-pulse",
-        isActive ? "bg-emerald-500" : isFailed ? "bg-rose-500" : "bg-neutral-500"
+        isActive ? "bg-emerald-500" : isFailed ? "bg-rose-500" : "bg-muted-foreground"
       )} />
       <span>{isActive ? "Active" : isFailed ? "Failed" : state}</span>
     </div>
@@ -529,10 +529,10 @@ function StatusBadge({ state, subState, loadState }: { state: string, subState: 
 
 function ActionButton({ icon: Icon, onClick, loading, theme = "neutral", className }: any) {
    const themes: any = {
-      primary: "hover:bg-primary/10 text-neutral-400 hover:text-primary",
-      rose: "hover:bg-rose-500/10 text-neutral-400 hover:text-rose-500",
-      emerald: "hover:bg-emerald-500/10 text-neutral-400 hover:text-emerald-500",
-      neutral: "hover:bg-neutral-500/10 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300"
+      primary: "hover:bg-primary/10 text-muted-foreground/60 hover:text-primary",
+      rose: "hover:bg-rose-500/10 text-muted-foreground/60 hover:text-rose-500",
+      emerald: "hover:bg-emerald-500/10 text-muted-foreground/60 hover:text-emerald-500",
+      neutral: "hover:bg-muted-foreground/10 text-muted-foreground/60 hover:text-foreground dark:hover:text-muted-foreground/40"
    };
 
    return (

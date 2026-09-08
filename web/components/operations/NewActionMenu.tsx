@@ -261,7 +261,7 @@ export function NewActionMenu({ currentPath, onCreateFolder, onRefresh, provider
         aria-haspopup="true"
         aria-expanded={isOpen}
         className={cn(
-          "flex items-center space-x-3 px-5 h-12 bg-primary text-white rounded-2xl shadow-lg hover:shadow-primary/20 hover:bg-primary/95 transition-all active:scale-95 shrink-0 select-none",
+          "flex items-center space-x-3 px-5 h-12 bg-primary text-white rounded-xl shadow-lg hover:bg-primary/95 transition-all active:scale-95 shrink-0 select-none",
           isPending && "opacity-50 cursor-not-allowed"
         )}
       >
@@ -281,23 +281,23 @@ export function NewActionMenu({ currentPath, onCreateFolder, onRefresh, provider
       {isOpen && (
         <div 
           role="menu"
-          className="absolute right-0 mt-2 w-52 bg-white/90 dark:bg-neutral-900/95 backdrop-blur-xl border border-neutral-200/50 dark:border-neutral-800/50 rounded-2xl shadow-xl shadow-neutral-200/30 dark:shadow-black/50 z-50 p-1.5 focus:outline-none animate-in fade-in slide-in-from-top-2 duration-150"
+          className="absolute right-0 mt-2 w-52 bg-card/90 backdrop-blur-xl border border-border rounded-xl shadow-xl z-50 p-1.5 focus:outline-none animate-in fade-in slide-in-from-top-2 duration-150"
         >
           {/* Storage Provider Selector */}
           {!provider && (
             <>
               <div className="px-3.5 py-2 flex flex-col space-y-1">
-                <span className="text-[9px] font-black uppercase tracking-widest text-neutral-400">Storage Provider</span>
+                <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Storage Provider</span>
                 <select
                   value={activeStorageProvider}
                   onChange={(e) => setActiveStorageProvider(e.target.value as "telegram" | "omnicloud")}
-                  className="w-full text-xs font-bold bg-neutral-100 dark:bg-neutral-800 rounded-lg p-1.5 border-none outline-none focus:ring-2 focus:ring-primary/20 text-neutral-700 dark:text-neutral-200 transition-all cursor-pointer"
+                  className="w-full text-xs font-bold bg-surface-2 rounded-lg p-1.5 border-none outline-none focus:ring-2 focus:ring-primary/20 text-foreground transition-all cursor-pointer"
                 >
                   <option value="telegram">Telegram (Default)</option>
                   <option value="omnicloud">OmniCloud Engine</option>
                 </select>
               </div>
-              <div className="h-px bg-neutral-150 dark:bg-neutral-800 my-1 mx-1" />
+              <div className="h-px bg-border my-1 mx-1" />
             </>
           )}
 
@@ -305,7 +305,7 @@ export function NewActionMenu({ currentPath, onCreateFolder, onRefresh, provider
             role="menuitem"
             ref={(el) => { menuItemsRef.current[0] = el; }}
             onClick={() => { setIsOpen(false); onCreateFolder(); }}
-            className="w-full flex items-center space-x-3 px-3.5 py-2.5 text-left text-xs font-bold text-neutral-600 dark:text-neutral-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl transition-all outline-none focus:bg-primary/5 focus:text-primary dark:focus:bg-primary/10"
+            className="w-full flex items-center space-x-3 px-3.5 py-2.5 text-left text-xs font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl transition-all outline-none focus:bg-primary/5 focus:text-primary dark:focus:bg-primary/10"
           >
             <FolderPlus size={16} />
             <span>New Folder</span>
@@ -315,7 +315,7 @@ export function NewActionMenu({ currentPath, onCreateFolder, onRefresh, provider
             role="menuitem"
             ref={(el) => { menuItemsRef.current[1] = el; }}
             onClick={() => { setIsOpen(false); fileInputRef.current?.click(); }}
-            className="w-full flex items-center space-x-3 px-3.5 py-2.5 text-left text-xs font-bold text-neutral-600 dark:text-neutral-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl transition-all outline-none focus:bg-primary/5 focus:text-primary dark:focus:bg-primary/10"
+            className="w-full flex items-center space-x-3 px-3.5 py-2.5 text-left text-xs font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl transition-all outline-none focus:bg-primary/5 focus:text-primary dark:focus:bg-primary/10"
           >
             <FileUp size={16} />
             <span>Upload File</span>
@@ -325,19 +325,19 @@ export function NewActionMenu({ currentPath, onCreateFolder, onRefresh, provider
             role="menuitem"
             ref={(el) => { menuItemsRef.current[2] = el; }}
             onClick={() => { setIsOpen(false); folderInputRef.current?.click(); }}
-            className="w-full flex items-center space-x-3 px-3.5 py-2.5 text-left text-xs font-bold text-neutral-600 dark:text-neutral-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl transition-all outline-none focus:bg-primary/5 focus:text-primary dark:focus:bg-primary/10"
+            className="w-full flex items-center space-x-3 px-3.5 py-2.5 text-left text-xs font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl transition-all outline-none focus:bg-primary/5 focus:text-primary dark:focus:bg-primary/10"
           >
             <FolderUp size={16} />
             <span>Upload Folder</span>
           </button>
 
-          <div className="h-px bg-neutral-150 dark:bg-neutral-800 my-1 mx-1" />
+          <div className="h-px bg-border my-1 mx-1" />
 
           <button
             role="menuitem"
             ref={(el) => { menuItemsRef.current[3] = el; }}
             onClick={() => { setIsOpen(false); onRefresh(); }}
-            className="w-full flex items-center space-x-3 px-3.5 py-2.5 text-left text-xs font-bold text-neutral-600 dark:text-neutral-300 hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl transition-all outline-none focus:bg-primary/5 focus:text-primary dark:focus:bg-primary/10"
+            className="w-full flex items-center space-x-3 px-3.5 py-2.5 text-left text-xs font-bold text-muted-foreground hover:text-primary hover:bg-primary/5 dark:hover:bg-primary/10 rounded-xl transition-all outline-none focus:bg-primary/5 focus:text-primary dark:focus:bg-primary/10"
           >
             <RefreshCw size={16} />
             <span>Refresh</span>

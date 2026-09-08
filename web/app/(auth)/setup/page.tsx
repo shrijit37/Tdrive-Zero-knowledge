@@ -4,16 +4,14 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/axios";
 import { Button, Input, cn } from "@/components/ui";
-import { 
-  ShieldCheck, 
-  Send, 
-  Database, 
-  Lock, 
-  CheckCircle2, 
-  ChevronRight, 
+import {
+  ShieldCheck,
+  Send,
+  Database,
+  CheckCircle2,
+  ChevronRight,
   Loader2,
   AlertCircle,
-  Key
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -25,26 +23,23 @@ export default function SetupPage() {
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
 
-  // --- Step 1: Init State ---
   const [initForm, setInitForm] = React.useState({
     api_id: "",
     api_hash: "",
     channel_id: "",
     master_password: "",
-    confirm_password: ""
+    confirm_password: "",
   });
 
-  // --- Step 2: Login State ---
   const [loginForm, setLoginForm] = React.useState({
     phone: "",
     code: "",
     phone_code_hash: "",
-    password_2fa: ""
+    password_2fa: "",
   });
   const [isCodeSent, setIsCodeSent] = React.useState(false);
   const [needs2FA, setNeeds2FA] = React.useState(false);
 
-  // Initial check
   React.useEffect(() => {
     const checkStatus = async () => {
       try {
@@ -65,7 +60,6 @@ export default function SetupPage() {
       toast.error("Passwords do not match");
       return;
     }
-    
     setLoading(true);
     setError(null);
     try {
@@ -73,7 +67,7 @@ export default function SetupPage() {
         api_id: parseInt(initForm.api_id),
         api_hash: initForm.api_hash,
         channel_id: parseInt(initForm.channel_id),
-        master_password: initForm.master_password
+        master_password: initForm.master_password,
       });
       toast.success("System initialized!");
       setStep("login");
@@ -108,9 +102,8 @@ export default function SetupPage() {
         phone: loginForm.phone,
         code: loginForm.code,
         phone_code_hash: loginForm.phone_code_hash,
-        password: loginForm.password_2fa || null
+        password: loginForm.password_2fa || null,
       });
-
       if (resp.data.error?.code === "2FA_REQUIRED") {
         setNeeds2FA(true);
         toast.error("Two-factor authentication required");
@@ -125,177 +118,176 @@ export default function SetupPage() {
     }
   };
 
+  const stepConfig = [
+    { key: "init", icon: Database, label: "Configure" },
+    { key: "login", icon: Send, label: "Connect" },
+    { key: "success", icon: CheckCircle2, label: "Ready" },
+  ] as const;
+
+  const currentIdx = step === "init" ? 0 : step === "login" ? 1 : 2;
+
   return (
-    <div className="min-h-screen w-full bg-neutral-950 flex items-center justify-center p-4">
-      <div className="w-full max-w-xl">
+    <div className="min-h-screen w-full bg-background flex items-center justify-center p-4">
+      <div className="w-full max-w-lg">
         {/* Progress Tracker */}
-        <div className="flex items-center justify-between mb-12 px-6">
-          <div className={cn("flex flex-col items-center space-y-2", step === "init" ? "text-primary" : "text-neutral-600")}>
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center border-2", step === "init" ? "border-primary bg-primary/10" : "border-neutral-800")}>
-               <Database size={20} />
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-widest">Configure</span>
-          </div>
-          <div className="h-px flex-1 bg-neutral-900 mx-4" />
-          <div className={cn("flex flex-col items-center space-y-2", step === "login" ? "text-primary" : "text-neutral-600")}>
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center border-2", step === "login" ? "border-primary bg-primary/10" : "border-neutral-800")}>
-               <Send size={20} />
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-widest">Connect</span>
-          </div>
-          <div className="h-px flex-1 bg-neutral-900 mx-4" />
-          <div className={cn("flex flex-col items-center space-y-2", step === "success" ? "text-primary" : "text-neutral-600")}>
-            <div className={cn("w-10 h-10 rounded-full flex items-center justify-center border-2", step === "success" ? "border-primary bg-primary/10" : "border-neutral-800")}>
-               <CheckCircle2 size={20} />
-            </div>
-            <span className="text-[10px] font-black uppercase tracking-widest">Ready</span>
-          </div>
+        <div className="flex items-center justify-between mb-10 px-4">
+          {stepConfig.map((s, i) => (
+            <React.Fragment key={s.key}>
+              <div className={cn("flex flex-col items-center gap-2", i <= currentIdx ? "text-primary" : "text-muted-foreground/40")}>
+                <div className={cn(
+                  "w-8 h-8 rounded-full flex items-center justify-center border transition-all duration-300",
+                  i <= currentIdx
+                    ? "border-primary/40 bg-primary/10"
+                    : "border-border"
+                )}>
+                  <s.icon size={14} />
+                </div>
+                <span className="text-[10px] font-semibold uppercase tracking-wider">{s.label}</span>
+              </div>
+              {i < stepConfig.length - 1 && (
+                <div className={cn(
+                  "h-px flex-1 mx-3 transition-colors duration-300",
+                  i < currentIdx ? "bg-primary/30" : "bg-border/50"
+                )} />
+              )}
+            </React.Fragment>
+          ))}
         </div>
 
         {/* Content Card */}
-        <div className="bg-neutral-900/50 border border-neutral-800 rounded-[2.5rem] p-8 md:p-12 shadow-2xl backdrop-blur-xl">
+        <div className="bg-card border border-border/50 rounded-xl p-6 md:p-8 shadow-raised">
           {error && (
-            <div className="mb-8 p-4 bg-destructive/10 border border-destructive/20 rounded-2xl flex items-center space-x-3 text-destructive animate-in slide-in-from-top-2">
-               <AlertCircle size={20} />
-               <p className="text-sm font-bold">{error}</p>
+            <div className="mb-6 p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-center gap-2.5 text-destructive animate-slide-up">
+              <AlertCircle size={16} />
+              <p className="text-xs font-medium">{error}</p>
             </div>
           )}
 
           {step === "init" && (
-            <form onSubmit={handleInit} className="space-y-6 animate-in fade-in duration-500">
-              <div className="space-y-2 text-center mb-8">
-                <h1 className="text-3xl font-black tracking-tight text-white">Welcome to TDrive</h1>
-                <p className="text-neutral-500 font-medium">Let's set up your personal cloud node.</p>
+            <form onSubmit={handleInit} className="space-y-5 animate-fade-in">
+              <div className="space-y-1 text-center mb-6">
+                <h1 className="text-2xl font-display font-bold tracking-tight text-foreground">Welcome to TDrive</h1>
+                <p className="text-muted-foreground text-sm">Set up your personal cloud node.</p>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-neutral-500 ml-4">API ID</label>
-                  <Input 
-                    required 
-                    placeholder="123456" 
-                    className="h-14 rounded-2xl bg-black/40 border-neutral-800"
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-medium text-muted-foreground">API ID</label>
+                  <Input
+                    required
+                    placeholder="123456"
                     value={initForm.api_id}
-                    onChange={(e) => setInitForm({...initForm, api_id: e.target.value})}
+                    onChange={(e) => setInitForm({ ...initForm, api_id: e.target.value })}
                   />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-neutral-500 ml-4">API Hash</label>
-                  <Input 
-                    required 
-                    placeholder="abc123..." 
-                    className="h-14 rounded-2xl bg-black/40 border-neutral-800"
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-medium text-muted-foreground">API Hash</label>
+                  <Input
+                    required
+                    placeholder="abc123..."
                     value={initForm.api_hash}
-                    onChange={(e) => setInitForm({...initForm, api_hash: e.target.value})}
+                    onChange={(e) => setInitForm({ ...initForm, api_hash: e.target.value })}
                   />
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase text-neutral-500 ml-4">Storage Channel ID</label>
-                <Input 
-                  required 
-                  placeholder="-100123456789" 
-                  className="h-14 rounded-2xl bg-black/40 border-neutral-800"
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-medium text-muted-foreground">Storage Channel ID</label>
+                <Input
+                  required
+                  placeholder="-100123456789"
                   value={initForm.channel_id}
-                  onChange={(e) => setInitForm({...initForm, channel_id: e.target.value})}
+                  onChange={(e) => setInitForm({ ...initForm, channel_id: e.target.value })}
                 />
               </div>
 
-              <div className="h-px bg-neutral-800 my-4" />
+              <div className="h-px bg-border/50" />
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase text-primary ml-4">Master Password (Encryption)</label>
-                <Input 
-                  required 
-                  type="password" 
-                  placeholder="Set your secure master password" 
-                  className="h-14 rounded-2xl bg-black/40 border-primary/20 focus:border-primary"
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-medium text-primary">Master Password</label>
+                <Input
+                  required
+                  type="password"
+                  placeholder="Set encryption password"
+                  className="border-primary/20 focus:border-primary/50"
                   value={initForm.master_password}
-                  onChange={(e) => setInitForm({...initForm, master_password: e.target.value})}
+                  onChange={(e) => setInitForm({ ...initForm, master_password: e.target.value })}
                 />
               </div>
-              <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase text-neutral-500 ml-4">Confirm Password</label>
-                <Input 
-                  required 
-                  type="password" 
-                  placeholder="Repeat your password" 
-                  className="h-14 rounded-2xl bg-black/40 border-neutral-800"
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-medium text-muted-foreground">Confirm Password</label>
+                <Input
+                  required
+                  type="password"
+                  placeholder="Repeat password"
                   value={initForm.confirm_password}
-                  onChange={(e) => setInitForm({...initForm, confirm_password: e.target.value})}
+                  onChange={(e) => setInitForm({ ...initForm, confirm_password: e.target.value })}
                 />
               </div>
 
-              <Button 
-                disabled={loading}
-                className="w-full h-16 rounded-[1.5rem] font-black text-lg shadow-xl shadow-primary/20"
-              >
-                {loading ? <Loader2 className="animate-spin" /> : "Save Configuration"}
+              <Button disabled={loading} className="w-full h-11 text-sm">
+                {loading ? <Loader2 className="animate-spin" size={16} /> : "Save Configuration"}
               </Button>
             </form>
           )}
 
           {step === "login" && (
-            <div className="space-y-8 animate-in slide-in-from-right-10 duration-500">
-               <div className="space-y-2 text-center">
-                <h1 className="text-3xl font-black tracking-tight text-white">Connect Telegram</h1>
-                <p className="text-neutral-500 font-medium">Authorize TDrive to access your cloud channel.</p>
+            <div className="space-y-6 animate-fade-in">
+              <div className="space-y-1 text-center">
+                <h1 className="text-2xl font-display font-bold tracking-tight text-foreground">Connect Telegram</h1>
+                <p className="text-muted-foreground text-sm">Authorize TDrive to access your cloud channel.</p>
               </div>
 
               {!isCodeSent ? (
-                <div className="space-y-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-neutral-500 ml-4">Phone Number</label>
-                    <Input 
-                      placeholder="+62..." 
-                      className="h-16 rounded-2xl bg-black/40 border-neutral-800 text-xl font-bold px-6"
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-medium text-muted-foreground">Phone Number</label>
+                    <Input
+                      placeholder="+1 234 567 890"
+                      className="text-sm font-semibold"
                       value={loginForm.phone}
-                      onChange={(e) => setLoginForm({...loginForm, phone: e.target.value})}
+                      onChange={(e) => setLoginForm({ ...loginForm, phone: e.target.value })}
                     />
                   </div>
-                  <Button 
+                  <Button
                     onClick={handleSendCode}
                     disabled={loading}
-                    className="w-full h-16 rounded-[1.5rem] font-black text-lg shadow-xl shadow-primary/20"
+                    className="w-full h-11 text-sm"
                   >
-                    {loading ? <Loader2 className="animate-spin" /> : "Send Verification Code"}
+                    {loading ? <Loader2 className="animate-spin" size={16} /> : "Send Verification Code"}
                   </Button>
                 </div>
               ) : (
-                <form onSubmit={handleVerifyCode} className="space-y-6">
-                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase text-neutral-500 ml-4">Verification Code</label>
-                    <Input 
+                <form onSubmit={handleVerifyCode} className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-[11px] font-medium text-muted-foreground">Verification Code</label>
+                    <Input
                       required
-                      placeholder="Enter 5-digit code" 
-                      className="h-16 rounded-2xl bg-black/40 border-primary/20 text-2xl font-black tracking-[0.5em] text-center"
+                      placeholder="Enter code"
+                      className="text-center font-mono text-base tracking-[0.3em] font-semibold"
                       value={loginForm.code}
-                      onChange={(e) => setLoginForm({...loginForm, code: e.target.value})}
+                      onChange={(e) => setLoginForm({ ...loginForm, code: e.target.value })}
                     />
                   </div>
 
                   {needs2FA && (
-                    <div className="space-y-2 animate-in zoom-in-95">
-                      <label className="text-[10px] font-black uppercase text-amber-500 ml-4">2-Factor Password</label>
-                      <Input 
+                    <div className="space-y-1.5 animate-slide-up">
+                      <label className="text-[11px] font-medium text-status-warning">2FA Password</label>
+                      <Input
                         required
                         type="password"
-                        placeholder="Enter your 2FA password" 
-                        className="h-14 rounded-2xl bg-black/40 border-amber-500/20"
+                        placeholder="Enter 2FA password"
+                        className="border-status-warning/20 focus:border-status-warning/50"
                         value={loginForm.password_2fa}
-                        onChange={(e) => setLoginForm({...loginForm, password_2fa: e.target.value})}
+                        onChange={(e) => setLoginForm({ ...loginForm, password_2fa: e.target.value })}
                       />
                     </div>
                   )}
 
-                  <Button 
-                    disabled={loading}
-                    className="w-full h-16 rounded-[1.5rem] font-black text-lg shadow-xl shadow-primary/20"
-                  >
-                    {loading ? <Loader2 className="animate-spin" /> : "Complete Connection"}
+                  <Button disabled={loading} className="w-full h-11 text-sm">
+                    {loading ? <Loader2 className="animate-spin" size={16} /> : "Complete Connection"}
                   </Button>
-                  <Button variant="ghost" onClick={() => setIsCodeSent(false)} className="w-full h-12 text-neutral-500 font-bold">
+                  <Button variant="ghost" onClick={() => setIsCodeSent(false)} className="w-full h-9 text-muted-foreground">
                     Use different phone number
                   </Button>
                 </form>
@@ -304,40 +296,40 @@ export default function SetupPage() {
           )}
 
           {step === "success" && (
-             <div className="text-center space-y-8 animate-in zoom-in-95 duration-500">
-                <div className="w-24 h-24 bg-green-500/10 text-green-500 rounded-[2.5rem] flex items-center justify-center mx-auto shadow-2xl shadow-green-500/20">
-                   <ShieldCheck size={48} />
+            <div className="text-center space-y-6 animate-fade-in">
+              <div className="w-16 h-16 bg-status-success/10 text-status-success rounded-xl flex items-center justify-center mx-auto">
+                <ShieldCheck size={32} />
+              </div>
+              <div className="space-y-1">
+                <h1 className="text-2xl font-display font-bold tracking-tight text-foreground">TDrive is Ready</h1>
+                <p className="text-muted-foreground text-sm">
+                  Your agent is initialized and connected to Telegram.
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="p-3 bg-surface-1 rounded-lg border border-border/50">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1">Status</p>
+                  <p className="text-xs font-semibold text-status-success font-mono">Connected</p>
                 </div>
-                <div className="space-y-2">
-                   <h1 className="text-3xl font-black tracking-tight text-white">TDrive is Ready!</h1>
-                   <p className="text-neutral-500 font-medium leading-relaxed">
-                      Your hybrid agent is fully initialized and connected to Telegram.
-                   </p>
+                <div className="p-3 bg-surface-1 rounded-lg border border-border/50">
+                  <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground mb-1">Encryption</p>
+                  <p className="text-xs font-semibold text-primary font-mono">AES-256-GCM</p>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                   <div className="p-4 bg-neutral-950/50 rounded-2xl border border-neutral-800">
-                      <p className="text-[9px] font-black uppercase text-neutral-600 mb-1">Status</p>
-                      <p className="text-xs font-bold text-green-500">Connected</p>
-                   </div>
-                   <div className="p-4 bg-neutral-950/50 rounded-2xl border border-neutral-800">
-                      <p className="text-[9px] font-black uppercase text-neutral-600 mb-1">Encryption</p>
-                      <p className="text-xs font-bold text-primary">AES-256-GCM</p>
-                   </div>
-                </div>
-                <Button 
-                  onClick={() => router.push("/login")}
-                  className="w-full h-16 rounded-[1.5rem] font-black text-lg shadow-xl shadow-primary/20 group"
-                >
-                  <span>Launch Dashboard</span>
-                  <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-             </div>
+              </div>
+              <Button
+                onClick={() => router.push("/login")}
+                className="w-full h-11 text-sm group"
+              >
+                <span>Launch Dashboard</span>
+                <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform duration-150" />
+              </Button>
+            </div>
           )}
         </div>
 
         {/* Footer */}
-        <p className="mt-8 text-center text-[10px] font-black uppercase tracking-[0.3em] text-neutral-700">
-           TDrive Unified Agent • Built for Privacy
+        <p className="mt-6 text-center text-[10px] text-muted-foreground/30 font-medium uppercase tracking-wider">
+          TDrive v1.4.0 — Self-hosted · Encrypted
         </p>
       </div>
     </div>

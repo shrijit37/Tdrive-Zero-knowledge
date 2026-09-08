@@ -30,7 +30,7 @@ export function Dialog({
 
   useEffect(() => {
     if (isOpen) {
-      import('@/lib/scrollLock').then(({ lockScroll, unlockScroll }) => {
+      import('@/lib/scrollLock').then(({ lockScroll }) => {
         lockScroll();
       });
       const handleEsc = (e: KeyboardEvent) => {
@@ -50,19 +50,19 @@ export function Dialog({
 
   return createPortal(
     <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 sm:p-6">
-      {/* Backdrop */}
-      <div 
+      {/* Backdrop — subtle dark overlay */}
+      <div
         className={cn(
-          "absolute inset-0 bg-neutral-950/40 backdrop-blur-[2px] animate-in fade-in duration-300",
+          "absolute inset-0 bg-black/50 backdrop-blur-[4px] animate-fade-in",
           backdropClassName
-        )} 
-        onClick={onClose} 
+        )}
+        onClick={onClose}
       />
-      
-      {/* Content */}
-      <div 
+
+      {/* Content — Builder's Edge: 14px radius, subtle shadow, hairline border */}
+      <div
         className={cn(
-          "relative bg-card w-full max-w-md rounded-[2rem] shadow-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh] sm:max-h-[85vh]",
+          "relative bg-card w-full max-w-md rounded-xl shadow-overlay border border-border/50 overflow-hidden animate-slide-up flex flex-col max-h-[90vh] sm:max-h-[85vh]",
           className
         )}
       >

@@ -103,7 +103,7 @@ export function UploadButton({ currentPath }: { currentPath: string }) {
         onClick={() => fileInputRef.current?.click()}
         disabled={isLoading}
         className={cn(
-          "flex items-center space-x-3 px-5 h-12 md:h-14 bg-card hover:bg-neutral-50 dark:hover:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-sm hover:shadow-md transition-all active:scale-95 group",
+          "flex items-center space-x-3 px-5 h-12 md:h-14 bg-card hover:bg-surface-1 border border-border rounded-xl shadow-sm hover:shadow-md transition-all active:scale-95 group",
           isLoading && "opacity-50 cursor-not-allowed"
         )}
       >
@@ -114,7 +114,7 @@ export function UploadButton({ currentPath }: { currentPath: string }) {
             <Plus size={24} strokeWidth={2.5} />
           )}
         </div>
-        <span className="hidden md:block font-bold text-sm text-neutral-700 dark:text-neutral-300">
+        <span className="hidden md:block font-bold text-sm text-foreground">
           {isHashing ? "Hashing file..." : "New Upload"}
         </span>
         <span className="md:hidden font-bold text-sm text-primary">

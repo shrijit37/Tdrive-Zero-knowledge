@@ -319,13 +319,13 @@ export default function SettingsPage() {
   return (
     <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in duration-500 pb-10 px-4 sm:px-6 md:px-0">
       {/* 1. Header */}
-      <div className="flex items-center space-x-3 text-neutral-900 dark:text-neutral-100">
+      <div className="flex items-center space-x-3 text-foreground dark:text-foreground/80">
         <div className="p-2 bg-primary/10 text-primary rounded-xl shadow-sm">
           <Settings size={20} />
         </div>
         <div>
-          <h1 className="text-xl font-black tracking-tight">Preferences</h1>
-          <p className="text-[10px] text-neutral-400 font-bold uppercase tracking-widest mt-0.5">Personalize your cloud experience</p>
+          <h1 className="text-xl font-display font-bold tracking-tight">Preferences</h1>
+          <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider mt-0.5">Personalize your cloud experience</p>
         </div>
       </div>
 
@@ -333,25 +333,25 @@ export default function SettingsPage() {
       <section className="space-y-4">
         <div className="flex items-center space-x-2 px-1">
            <Palette size={14} className="text-primary" />
-           <h2 className="text-[10px] font-black uppercase text-neutral-400 tracking-[0.2em]">Visual Appearance</h2>
+           <h2 className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider">Visual Appearance</h2>
         </div>
         
-        <div className="bg-card border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-sm overflow-hidden">
+        <div className="bg-card border border-border/50 rounded-2xl shadow-sm overflow-hidden">
            {/* Section 1: Interface Theme */}
            <div className="p-5 sm:p-6 space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                  <div>
                     <h3 className="font-bold text-sm">Interface Theme</h3>
-                    <p className="text-xs text-neutral-500 mt-0.5">Choose how TDrive looks to you.</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">Choose how TDrive looks to you.</p>
                  </div>
-                 <div className="grid grid-cols-3 gap-1 p-1 bg-neutral-100 dark:bg-neutral-800/50 rounded-xl w-full sm:w-64">
+                 <div className="grid grid-cols-3 gap-1 p-1 bg-surface-2 dark:bg-surface-2/50 rounded-xl w-full sm:w-64">
                     {(["light", "dark", "system"] as ThemeMode[]).map((mode) => (
                        <button
                          key={mode}
                          onClick={() => setThemeMode(mode)}
                          className={cn(
                            "flex items-center justify-center space-x-2 py-1.5 rounded-lg transition-all",
-                           themeMode === mode ? "bg-card text-primary shadow-sm" : "text-neutral-500 hover:text-foreground"
+                           themeMode === mode ? "bg-card text-primary shadow-sm" : "text-muted-foreground hover:text-foreground"
                          )}
                        >
                           {mode === "light" && <Sun size={12} />}
@@ -364,10 +364,10 @@ export default function SettingsPage() {
               </div>
            </div>
 
-           <div className="border-t border-neutral-100 dark:border-neutral-800" />
+           <div className="border-t border-border/50" />
 
            {/* Section 2: Accent & Density Grid */}
-           <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-neutral-100 dark:divide-neutral-800">
+           <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-border/30">
               {/* Accent Color */}
               <div className="p-5 sm:p-6 space-y-4">
                  <h3 className="font-bold text-sm">Accent Color</h3>
@@ -394,14 +394,14 @@ export default function SettingsPage() {
               <div className="p-5 sm:p-6 space-y-4">
                  <div className="flex items-center justify-between">
                     <h3 className="font-bold text-sm">Layout Density</h3>
-                    <div className="flex bg-neutral-100 dark:bg-neutral-800/50 p-1 rounded-xl">
+                    <div className="flex bg-surface-2 dark:bg-surface-2/50 p-1 rounded-xl">
                        {(["comfortable", "compact"] as UIDensity[]).map((d) => (
                           <button
                             key={d}
                             onClick={() => setDensity(d)}
                             className={cn(
                               "flex items-center space-x-1.5 px-3 py-1 rounded-lg text-[10px] font-bold capitalize transition-all",
-                              density === d ? "bg-card text-primary shadow-sm" : "text-neutral-500 hover:text-foreground"
+                              density === d ? "bg-card text-primary shadow-sm" : "text-muted-foreground hover:text-foreground"
                             )}
                           >
                              {d === "comfortable" ? <Maximize size={10} /> : <Minimize size={10} />}
@@ -410,7 +410,7 @@ export default function SettingsPage() {
                        ))}
                     </div>
                  </div>
-                 <p className="text-[11px] text-neutral-500">Adjust the density of the file list.</p>
+                 <p className="text-[11px] text-muted-foreground">Adjust the density of the file list.</p>
               </div>
            </div>
         </div>
@@ -420,20 +420,20 @@ export default function SettingsPage() {
       <section className="space-y-4">
         <div className="flex items-center space-x-2 px-1">
            <Bot size={14} className="text-primary" />
-           <h2 className="text-[10px] font-black uppercase text-neutral-400 tracking-[0.2em]">Telegram Bot Interface</h2>
+           <h2 className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider">Telegram Bot Interface</h2>
         </div>
         
-        <div className="bg-card border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 space-y-6 shadow-sm">
+        <div className="bg-card border border-border/50 rounded-2xl p-5 space-y-6 shadow-sm">
            <div className="flex items-center justify-between">
               <div>
                  <h3 className="font-bold text-sm">Enable Bot Access</h3>
-                 <p className="text-xs text-neutral-500 mt-1">Control files via your own Telegram Bot.</p>
+                 <p className="text-xs text-muted-foreground mt-1">Control files via your own Telegram Bot.</p>
               </div>
               <button 
                 onClick={() => toggleFeature.mutate({ name: "bot_interface", enabled: !isBotEnabled })}
                 className={cn(
                   "w-12 h-6 rounded-full transition-colors relative",
-                  isBotEnabled ? "bg-primary" : "bg-neutral-200 dark:bg-neutral-800"
+                  isBotEnabled ? "bg-primary" : "bg-border/50 dark:bg-surface-2"
                 )}
               >
                  <div className={cn(
@@ -445,13 +445,13 @@ export default function SettingsPage() {
 
             {isBotEnabled && status?.bot && (
               <div className="space-y-3">
-                <div className="flex items-center space-x-3 p-3 bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-100 dark:border-neutral-800 rounded-xl">
+                <div className="flex items-center space-x-3 p-3 bg-surface-1 dark:bg-surface-1/50 border border-border/50 rounded-xl">
                    <div className={cn(
                      "w-2 h-2 rounded-full",
                      status.bot.is_active ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.4)]" : "bg-red-500"
                    )} />
                    <div className="flex-1">
-                      <p className="text-[10px] font-black uppercase text-neutral-400">Bot Status</p>
+                      <p className="text-[11px] font-semibold uppercase text-muted-foreground/60">Bot Status</p>
                       <p className="text-xs font-bold">
                          {status.bot.is_active ? "Connected & Online" : "Disconnected"}
                          {status.bot.username && <span className="ml-2 text-primary">@{status.bot.username}</span>}
@@ -466,18 +466,18 @@ export default function SettingsPage() {
                     </div>
                     <div className="space-y-1">
                       {status.bot.authorized_user_details?.map((user: any) => (
-                        <div key={user.id} className="flex items-center justify-between text-[11px] bg-white/50 dark:bg-black/20 p-1.5 px-2 rounded-lg border border-neutral-100 dark:border-neutral-800">
+                        <div key={user.id} className="flex items-center justify-between text-[11px] bg-white/50 dark:bg-black/20 p-1.5 px-2 rounded-lg border border-border/50">
                           <div className="flex items-center space-x-2">
-                            <span className="font-bold text-neutral-700 dark:text-neutral-300">
+                            <span className="font-bold text-muted-foreground/80 dark:text-muted-foreground/40">
                               {user.username ? `@${user.username}` : (user.first_name || user.id)}
                             </span>
                             {user.first_name && (
-                              <span className="text-neutral-400">
+                              <span className="text-muted-foreground/60">
                                 ({user.first_name}{user.last_name ? ` ${user.last_name}` : ''})
                               </span>
                             )}
                           </div>
-                          <span className="text-[9px] font-mono text-neutral-400">ID: {user.id}</span>
+                          <span className="text-[9px] font-mono text-muted-foreground/60">ID: {user.id}</span>
                         </div>
                       ))}
                     </div>
@@ -496,14 +496,14 @@ export default function SettingsPage() {
             )}
 
             <div className="space-y-3">
-               <label className="text-[10px] font-black uppercase text-neutral-400">Bot Token (from @BotFather)</label>
+               <label className="text-[11px] font-semibold uppercase text-muted-foreground/60">Bot Token (from @BotFather)</label>
                <div className="flex gap-2">
                   <input 
                     type="password"
                     placeholder="123456:ABC-DEF..."
                     value={botTokenInput}
                     onChange={(e) => setBotToken(e.target.value)}
-                    className="flex-1 bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                    className="flex-1 bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                   />
                   <Button 
                     className="h-10 px-6 rounded-xl font-bold text-xs"
@@ -516,7 +516,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="space-y-3">
-               <label className="text-[10px] font-black uppercase text-neutral-400">Authorized Telegram User ID(s)</label>
+               <label className="text-[11px] font-semibold uppercase text-muted-foreground/60">Authorized Telegram User ID(s)</label>
                <div className="flex gap-2">
                   <input 
                     type="text"
@@ -526,7 +526,7 @@ export default function SettingsPage() {
                       setAuthorizedUsersInput(e.target.value);
                       setIsAuthUsersDirty(true);
                     }}
-                    className="flex-1 bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                    className="flex-1 bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                   />
                   <Button 
                     className="h-10 px-6 rounded-xl font-bold text-xs"
@@ -549,7 +549,7 @@ export default function SettingsPage() {
                      {updateAuthorizedUsers.isPending ? <Loader2 className="animate-spin" size={14} /> : "Save Users"}
                   </Button>
                </div>
-               <p className="text-[10px] text-neutral-500 font-medium">
+               <p className="text-[10px] text-muted-foreground font-medium">
                   Separate multiple Telegram User IDs with commas or newlines. Leave empty for open access.
                </p>
             </div>
@@ -560,19 +560,19 @@ export default function SettingsPage() {
       <section className="space-y-4">
          <div className="flex items-center space-x-2 px-1">
             <Cloud size={14} className="text-blue-500" />
-            <h2 className="text-[10px] font-black uppercase text-neutral-400 tracking-[0.2em]">OmniCloud Storage</h2>
+            <h2 className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider">OmniCloud Storage</h2>
          </div>
          
-         <div className="bg-card border border-neutral-200 dark:border-neutral-800 rounded-2xl p-5 space-y-6 shadow-sm">
+         <div className="bg-card border border-border/50 rounded-2xl p-5 space-y-6 shadow-sm">
             <div className="flex items-center justify-between">
                <div>
                   <h3 className="font-bold text-sm">OmniCloud Server Status</h3>
-                  <p className="text-xs text-neutral-500 mt-1">Connect secondary cloud engines to aggregate storage.</p>
+                  <p className="text-xs text-muted-foreground mt-1">Connect secondary cloud engines to aggregate storage.</p>
                </div>
                <div className="flex items-center space-x-2">
                   <span className={cn(
                      "text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider",
-                     status?.omnicloud_connected ? "bg-blue-500/10 text-blue-500" : "bg-neutral-200 dark:bg-neutral-800 text-neutral-500"
+                     status?.omnicloud_connected ? "bg-blue-500/10 text-blue-500" : "bg-border/50 dark:bg-surface-2 text-muted-foreground"
                   )}>
                      {status?.omnicloud_connected ? "Connected" : "Offline"}
                   </span>
@@ -582,28 +582,28 @@ export default function SettingsPage() {
             {status?.omnicloud_connected && (
               <div className="space-y-6">
                  {/* Summary Section */}
-                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 border-t border-neutral-100 dark:border-neutral-800 pt-5">
-                    <div className="bg-neutral-50 dark:bg-neutral-900/20 border border-neutral-150 dark:border-neutral-800/80 p-4 rounded-2xl flex flex-col justify-between h-20 shadow-sm transition-all duration-300 hover:shadow">
-                       <span className="text-[9px] font-black uppercase text-neutral-400 tracking-wider">Total Accounts</span>
+                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 border-t border-border/50 pt-5">
+                    <div className="bg-surface-1 dark:bg-surface-1/20 border border-border/50 p-4 rounded-2xl flex flex-col justify-between h-20 shadow-sm transition-all duration-300 hover:shadow">
+                       <span className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider">Total Accounts</span>
                        <span className="text-lg font-bold text-blue-500">{summaryStats.totalAccounts}</span>
                     </div>
-                    <div className="bg-neutral-50 dark:bg-neutral-900/20 border border-neutral-150 dark:border-neutral-800/80 p-4 rounded-2xl flex flex-col justify-between h-20 shadow-sm transition-all duration-300 hover:shadow">
-                       <span className="text-[9px] font-black uppercase text-neutral-400 tracking-wider">Total Capacity</span>
+                    <div className="bg-surface-1 dark:bg-surface-1/20 border border-border/50 p-4 rounded-2xl flex flex-col justify-between h-20 shadow-sm transition-all duration-300 hover:shadow">
+                       <span className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider">Total Capacity</span>
                        <span className="text-lg font-bold">{formatSize(summaryStats.totalCapacity)}</span>
                     </div>
-                    <div className="bg-neutral-50 dark:bg-neutral-900/20 border border-neutral-150 dark:border-neutral-800/80 p-4 rounded-2xl flex flex-col justify-between h-20 shadow-sm transition-all duration-300 hover:shadow">
-                       <span className="text-[9px] font-black uppercase text-neutral-400 tracking-wider">Used Storage</span>
+                    <div className="bg-surface-1 dark:bg-surface-1/20 border border-border/50 p-4 rounded-2xl flex flex-col justify-between h-20 shadow-sm transition-all duration-300 hover:shadow">
+                       <span className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider">Used Storage</span>
                        <span className="text-lg font-bold text-amber-500">{formatSize(summaryStats.totalUsed)}</span>
                     </div>
-                    <div className="bg-neutral-50 dark:bg-neutral-900/20 border border-neutral-150 dark:border-neutral-800/80 p-4 rounded-2xl flex flex-col justify-between h-20 shadow-sm transition-all duration-300 hover:shadow">
-                       <span className="text-[9px] font-black uppercase text-neutral-400 tracking-wider">Available Storage</span>
+                    <div className="bg-surface-1 dark:bg-surface-1/20 border border-border/50 p-4 rounded-2xl flex flex-col justify-between h-20 shadow-sm transition-all duration-300 hover:shadow">
+                       <span className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider">Available Storage</span>
                        <span className="text-lg font-bold text-emerald-500">{formatSize(summaryStats.totalAvailable)}</span>
                     </div>
                  </div>
 
                  {/* List of Connected Accounts */}
-                 <div className="border-t border-neutral-100 dark:border-neutral-800 pt-5">
-                    <h4 className="text-[10px] font-black uppercase text-neutral-400 tracking-wider mb-4">Linked Accounts</h4>
+                 <div className="border-t border-border/50 pt-5">
+                    <h4 className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider mb-4">Linked Accounts</h4>
                     {ocAccounts && ocAccounts.length > 0 ? (
                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                           {ocAccounts.map((account: any) => {
@@ -612,12 +612,12 @@ export default function SettingsPage() {
                                 : 0;
                              
                              return (
-                                <div key={account.id} className="relative group flex flex-col justify-between p-5 bg-neutral-50 dark:bg-neutral-900/30 border border-neutral-150 dark:border-neutral-800 rounded-2xl shadow-sm hover:shadow-md hover:scale-[1.01] hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-300">
+                                <div key={account.id} className="relative group flex flex-col justify-between p-5 bg-surface-1 dark:bg-surface-1/30 border border-border/50 dark:border-border/50 rounded-2xl shadow-sm hover:shadow-md hover:scale-[1.01] hover:border-border/50 dark:hover:border-border/50 transition-all duration-300">
                                     <button 
                                        onClick={() => setOpenDropdownAccountId(openDropdownAccountId === account.id ? null : account.id)}
                                        className={cn(
-                                          "absolute top-4 right-4 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors p-1 rounded-lg z-25",
-                                          openDropdownAccountId === account.id && "text-neutral-700 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-800"
+                                          "absolute top-4 right-4 text-muted-foreground/60 hover:text-muted-foreground dark:hover:text-border transition-colors p-1 rounded-lg z-25",
+                                          openDropdownAccountId === account.id && "text-muted-foreground/80 dark:text-foreground bg-surface-2 dark:bg-surface-2"
                                        )}
                                     >
                                        <MoreVertical size={16} />
@@ -627,14 +627,14 @@ export default function SettingsPage() {
                                     {openDropdownAccountId === account.id && (
                                        <>
                                           <div className="fixed inset-0 z-30" onClick={() => setOpenDropdownAccountId(null)} />
-                                          <div className="absolute right-4 top-11 w-44 bg-card border border-neutral-200 dark:border-neutral-800 rounded-xl shadow-lg p-1.5 z-40 animate-in fade-in slide-in-from-top-2 duration-155">
+                                          <div className="absolute right-4 top-11 w-44 bg-card border border-border/50 rounded-xl shadow-lg p-1.5 z-40 animate-in fade-in slide-in-from-top-2 duration-155">
                                              <button
                                                 onClick={() => {
                                                    navigator.clipboard.writeText(account.email);
                                                    toast.success("Email copied to clipboard");
                                                    setOpenDropdownAccountId(null);
                                                 }}
-                                                className="w-full text-left px-2.5 py-1.5 text-xs rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-800 dark:hover:text-neutral-100 transition-colors flex items-center gap-2"
+                                                className="w-full text-left px-2.5 py-1.5 text-xs rounded-lg hover:bg-surface-2 dark:hover:bg-surface-2 hover:text-foreground dark:hover:text-foreground/80 transition-colors flex items-center gap-2"
                                              >
                                                 <Copy size={12} />
                                                 Copy Email
@@ -644,12 +644,12 @@ export default function SettingsPage() {
                                                    toast.success("Connection status: Healthy");
                                                    setOpenDropdownAccountId(null);
                                                 }}
-                                                className="w-full text-left px-2.5 py-1.5 text-xs rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-800 dark:hover:text-neutral-100 transition-colors flex items-center gap-2"
+                                                className="w-full text-left px-2.5 py-1.5 text-xs rounded-lg hover:bg-surface-2 dark:hover:bg-surface-2 hover:text-foreground dark:hover:text-foreground/80 transition-colors flex items-center gap-2"
                                              >
                                                 <Activity size={12} />
                                                 Verify Connection
                                              </button>
-                                             <div className="border-t border-neutral-100 dark:border-neutral-800 my-1" />
+                                             <div className="border-t border-border/50 my-1" />
                                              <button
                                                 onClick={async () => {
                                                    setOpenDropdownAccountId(null);
@@ -670,24 +670,24 @@ export default function SettingsPage() {
                                    <div className="space-y-4">
                                       {/* Provider Logo & Info */}
                                       <div className="flex items-center space-x-3">
-                                         <div className="p-2 bg-neutral-100 dark:bg-neutral-800 rounded-xl transition-transform group-hover:scale-105 duration-300">
-                                            {PROVIDER_LOGOS[account.provider.toLowerCase()] || <Database className="w-6 h-6 text-neutral-500" />}
+                                         <div className="p-2 bg-surface-2 dark:bg-surface-2 rounded-xl transition-transform group-hover:scale-105 duration-300">
+                                            {PROVIDER_LOGOS[account.provider.toLowerCase()] || <Database className="w-6 h-6 text-muted-foreground" />}
                                          </div>
                                          <div className="pr-4">
-                                            <p className="text-xs font-black text-neutral-800 dark:text-neutral-200">{PROVIDER_NAMES[account.provider.toLowerCase()] || account.provider}</p>
-                                            <p className="text-[10px] text-neutral-450 font-medium truncate max-w-[140px]" title={account.email}>{account.email}</p>
+                                            <p className="text-xs font-semibold text-foreground dark:text-foreground">{PROVIDER_NAMES[account.provider.toLowerCase()] || account.provider}</p>
+                                            <p className="text-[10px] text-muted-foreground/50 font-medium truncate max-w-[140px]" title={account.email}>{account.email}</p>
                                          </div>
                                       </div>
 
                                       {/* Progress Bar & Details */}
                                       <div className="space-y-2">
-                                         <div className="w-full bg-neutral-200 dark:bg-neutral-800 h-2 rounded-full overflow-hidden">
+                                         <div className="w-full bg-border/50 dark:bg-surface-2 h-2 rounded-full overflow-hidden">
                                             <div 
                                                className="bg-blue-500 h-full rounded-full transition-all duration-500"
                                                style={{ width: `${usedPercent}%` }}
                                             />
                                          </div>
-                                         <div className="flex items-center justify-between text-[10px] font-bold text-neutral-500">
+                                         <div className="flex items-center justify-between text-[10px] font-bold text-muted-foreground">
                                             <span>{formatSize(account.used_space || 0)} used</span>
                                             <span>{formatSize(account.total_space || 0)} total</span>
                                          </div>
@@ -698,13 +698,13 @@ export default function SettingsPage() {
                           })}
                        </div>
                     ) : (
-                       <p className="text-xs text-neutral-500 italic">No storage accounts connected. Link a cloud provider below.</p>
+                       <p className="text-xs text-muted-foreground italic">No storage accounts connected. Link a cloud provider below.</p>
                     )}
                  </div>
 
                   {/* Link New Cloud Storage Provider */}
-                  <div className="border-t border-neutral-100 dark:border-neutral-800 pt-5 space-y-4">
-                     <h4 className="text-[10px] font-black uppercase text-neutral-400 tracking-wider">Link New Provider</h4>
+                  <div className="border-t border-border/50 pt-5 space-y-4">
+                     <h4 className="text-[11px] font-semibold uppercase text-muted-foreground/60 tracking-wider">Link New Provider</h4>
                      
                      <div className="flex flex-wrap gap-3">
                         {/* OAuth providers */}
@@ -718,12 +718,12 @@ export default function SettingsPage() {
                               key={prov.id} 
                               onClick={() => connectOcOAuth.mutate(prov.id)}
                               disabled={connectOcOAuth.isPending}
-                              className="group flex items-center gap-2.5 p-2 px-3.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/10 hover:bg-neutral-100 dark:hover:bg-neutral-800/60 hover:border-neutral-300 dark:hover:border-neutral-700 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow"
+                              className="group flex items-center gap-2.5 p-2 px-3.5 rounded-xl border border-border/50 bg-surface-1/50 dark:bg-surface-1/10 hover:bg-surface-2 dark:hover:bg-surface-2/60 hover:border-border/50 dark:hover:border-border/50 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow"
                            >
                               <div className="w-5 h-5 flex items-center justify-center transition-transform group-hover:scale-105 duration-200">
                                  {PROVIDER_LOGOS[prov.id]}
                               </div>
-                              <span className="text-xs font-bold text-neutral-600 dark:text-neutral-300 flex items-center gap-1.5">
+                              <span className="text-xs font-bold text-muted-foreground dark:text-muted-foreground/40 flex items-center gap-1.5">
                                  {connectOcOAuth.isPending && connectOcOAuth.variables === prov.id && (
                                    <Loader2 className="animate-spin" size={12} />
                                  )}
@@ -754,7 +754,7 @@ export default function SettingsPage() {
                                    "group flex items-center gap-2.5 p-2 px-3.5 rounded-xl border border-dashed transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow",
                                    isActive 
                                      ? "border-primary bg-primary/5 text-primary" 
-                                     : "border-neutral-200 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/10 hover:bg-neutral-100 dark:hover:bg-neutral-800/60 hover:border-neutral-300 dark:hover:border-neutral-700"
+                                     : "border-border/50 bg-surface-1/50 dark:bg-surface-1/10 hover:bg-surface-2 dark:hover:bg-surface-2/60 hover:border-border/50 dark:hover:border-border/50"
                                  )}
                               >
                                  <div className="w-5 h-5 flex items-center justify-center transition-transform group-hover:scale-105 duration-200">
@@ -762,7 +762,7 @@ export default function SettingsPage() {
                                  </div>
                                  <span className={cn(
                                     "text-xs font-bold",
-                                    isActive ? "text-primary" : "text-neutral-600 dark:text-neutral-300"
+                                    isActive ? "text-primary" : "text-muted-foreground dark:text-muted-foreground/40"
                                  )}>
                                     Connect {prov.label}
                                  </span>
@@ -776,7 +776,7 @@ export default function SettingsPage() {
             
             {/* Inline credential input forms if one is selected */}
             {selectedCredentialProvider && (
-              <div className="border-t border-neutral-100 dark:border-neutral-800 pt-4 space-y-4">
+              <div className="border-t border-border/50 pt-4 space-y-4">
                  <div className="flex items-center justify-between">
                     <h4 className="text-xs font-bold capitalize">Link {selectedCredentialProvider} Account</h4>
                     <Button variant="ghost" className="h-6 px-2 text-[10px] font-bold" onClick={() => setSelectedCredentialProvider(null)}>Cancel</Button>
@@ -786,23 +786,23 @@ export default function SettingsPage() {
                     {(selectedCredentialProvider === "mega" || selectedCredentialProvider === "pcloud") && (
                        <>
                           <div className="space-y-1">
-                             <label className="text-[10px] font-bold text-neutral-400">Account Email / Username</label>
+                             <label className="text-[10px] font-bold text-muted-foreground/60">Account Email / Username</label>
                              <input 
                                type="email"
                                placeholder="user@example.com"
                                value={credentialForm.email}
                                onChange={(e) => setCredentialForm({ ...credentialForm, email: e.target.value })}
-                               className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                               className="w-full bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                              />
                           </div>
                           <div className="space-y-1">
-                             <label className="text-[10px] font-bold text-neutral-400">Password</label>
+                             <label className="text-[10px] font-bold text-muted-foreground/60">Password</label>
                              <input 
                                type="password"
                                placeholder="••••••••"
                                value={credentialForm.password}
                                onChange={(e) => setCredentialForm({ ...credentialForm, password: e.target.value })}
-                               className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                               className="w-full bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                              />
                           </div>
                        </>
@@ -811,54 +811,54 @@ export default function SettingsPage() {
                     {selectedCredentialProvider === "s3" && (
                        <>
                           <div className="space-y-1">
-                             <label className="text-[10px] font-bold text-neutral-400">Bucket Name</label>
+                             <label className="text-[10px] font-bold text-muted-foreground/60">Bucket Name</label>
                              <input 
                                type="text"
                                placeholder="my-bucket-name"
                                value={credentialForm.bucket}
                                onChange={(e) => setCredentialForm({ ...credentialForm, bucket: e.target.value })}
-                               className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                               className="w-full bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                              />
                           </div>
                           <div className="space-y-1">
-                             <label className="text-[10px] font-bold text-neutral-400">Access Key ID</label>
+                             <label className="text-[10px] font-bold text-muted-foreground/60">Access Key ID</label>
                              <input 
                                type="text"
                                placeholder="AKIAIOSFODNN7EXAMPLE"
                                value={credentialForm.accessKeyId}
                                onChange={(e) => setCredentialForm({ ...credentialForm, accessKeyId: e.target.value })}
-                               className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                               className="w-full bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                              />
                           </div>
                           <div className="space-y-1">
-                             <label className="text-[10px] font-bold text-neutral-400">Secret Access Key</label>
+                             <label className="text-[10px] font-bold text-muted-foreground/60">Secret Access Key</label>
                              <input 
                                type="password"
                                placeholder="wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
                                value={credentialForm.secretAccessKey}
                                onChange={(e) => setCredentialForm({ ...credentialForm, secretAccessKey: e.target.value })}
-                               className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                               className="w-full bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                              />
                           </div>
                           <div className="grid grid-cols-2 gap-2">
                              <div className="space-y-1">
-                                <label className="text-[10px] font-bold text-neutral-400">Region</label>
+                                <label className="text-[10px] font-bold text-muted-foreground/60">Region</label>
                                 <input 
                                   type="text"
                                   placeholder="us-east-1"
                                   value={credentialForm.region}
                                   onChange={(e) => setCredentialForm({ ...credentialForm, region: e.target.value })}
-                                  className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                                  className="w-full bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                                 />
                              </div>
                              <div className="space-y-1">
-                                <label className="text-[10px] font-bold text-neutral-400">Endpoint (Optional)</label>
+                                <label className="text-[10px] font-bold text-muted-foreground/60">Endpoint (Optional)</label>
                                 <input 
                                   type="text"
                                   placeholder="https://s3.amazonaws.com"
                                   value={credentialForm.endpoint}
                                   onChange={(e) => setCredentialForm({ ...credentialForm, endpoint: e.target.value })}
-                                  className="w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
+                                  className="w-full bg-surface-2 dark:bg-card border border-border/50 rounded-xl px-4 h-10 text-xs focus:ring-2 focus:ring-primary/20 outline-none"
                                 />
                              </div>
                           </div>
@@ -893,7 +893,7 @@ export default function SettingsPage() {
 
       {/* 4. Status Overview */}
       <section className="space-y-4">
-        <h2 className="text-[10px] font-bold uppercase text-neutral-400 tracking-[0.2em] px-1">Infrastructure Health</h2>
+        <h2 className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider px-1">Infrastructure Health</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <StatusCard icon={Send} label="MTProto" value={status?.telegram_connected ? "OK" : "Error"} ok={!!status?.telegram_connected} />
           <StatusCard icon={Database} label="Index" value={status?.sqlite_healthy ? "OK" : "Bad"} ok={!!status?.sqlite_healthy} />
@@ -904,8 +904,8 @@ export default function SettingsPage() {
 
       {/* 5. Administrative Section */}
       <section className="space-y-4">
-        <h2 className="text-[10px] font-bold uppercase text-neutral-400 tracking-[0.2em] px-1">Utilities</h2>
-        <div className="bg-card border border-neutral-200 dark:border-neutral-800 rounded-2xl overflow-hidden shadow-sm">
+        <h2 className="text-[10px] font-bold uppercase text-muted-foreground/60 tracking-wider px-1">Utilities</h2>
+        <div className="bg-card border border-border/50 rounded-2xl overflow-hidden shadow-sm">
           <AdminAction 
             icon={RefreshCw} 
             title="Rebuild Metadata Index" 
@@ -951,10 +951,10 @@ export default function SettingsPage() {
 
       {/* Footer Branding */}
       <footer className="pt-6 text-center space-y-3">
-         <div className="w-8 h-8 bg-neutral-100 dark:bg-neutral-800 rounded-xl mx-auto flex items-center justify-center text-neutral-300">
+         <div className="w-8 h-8 bg-surface-2 dark:bg-surface-2 rounded-xl mx-auto flex items-center justify-center text-muted-foreground/40">
             <Lock size={16} />
          </div>
-         <p className="text-[9px] font-black text-neutral-400 uppercase tracking-[0.4em]">
+         <p className="text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider">
             TDrive Agent • Build 1.4.0 • Build with DLA
          </p>
       </footer>
@@ -966,12 +966,12 @@ export default function SettingsPage() {
 
 function StatusCard({ icon: Icon, label, value, ok }: any) {
   return (
-    <div className="bg-card border border-neutral-200 dark:border-neutral-800 rounded-2xl p-4 space-y-2 relative overflow-hidden group">
+    <div className="bg-card border border-border/50 rounded-2xl p-4 space-y-2 relative overflow-hidden group">
       <div className={cn("p-2 rounded-lg w-fit transition-colors", ok ? "bg-green-500/10 text-green-500" : "bg-red-500/10 text-red-500")}>
         <Icon size={14} />
       </div>
       <div>
-        <p className="text-[8px] font-black uppercase text-neutral-400 tracking-tighter">{label}</p>
+        <p className="text-[8px] font-semibold uppercase text-muted-foreground/60 tracking-tight">{label}</p>
         <p className="text-xs font-bold truncate">{value}</p>
       </div>
       <div className={cn("absolute top-3 right-3 w-1 h-1 rounded-full", ok ? "bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" : "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]")} />
@@ -981,14 +981,14 @@ function StatusCard({ icon: Icon, label, value, ok }: any) {
 
 function AdminAction({ icon: Icon, title, desc, btnLabel, onClick, loading, variant = "default" }: any) {
   return (
-    <div className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b last:border-b-0 border-neutral-100 dark:border-neutral-800 hover:bg-neutral-50/50 dark:hover:bg-neutral-900/50 transition-all group">
+    <div className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b last:border-b-0 border-border/50 hover:bg-surface-1/50 dark:hover:bg-card/50 transition-all group">
       <div className="flex items-center space-x-4">
-        <div className="p-2.5 bg-neutral-100 dark:bg-neutral-800 rounded-lg group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+        <div className="p-2.5 bg-surface-2 dark:bg-surface-2 rounded-lg group-hover:bg-primary/10 group-hover:text-primary transition-colors">
           <Icon size={18} />
         </div>
         <div>
           <h4 className="font-bold text-sm tracking-tight">{title}</h4>
-          <p className="text-[11px] text-neutral-500 font-medium max-w-sm mt-0.5">{desc}</p>
+          <p className="text-[11px] text-muted-foreground font-medium max-w-sm mt-0.5">{desc}</p>
         </div>
       </div>
       <Button 

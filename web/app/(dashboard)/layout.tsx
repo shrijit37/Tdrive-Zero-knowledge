@@ -15,10 +15,10 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { 
-    isDesktopSidebarOpen, 
-    isMobileMenuOpen, 
-    setMobileMenuOpen 
+  const {
+    isDesktopSidebarOpen,
+    isMobileMenuOpen,
+    setMobileMenuOpen,
   } = useUIStore();
 
   React.useEffect(() => {
@@ -36,50 +36,50 @@ export default function DashboardLayout({
   }, [isMobileMenuOpen, setMobileMenuOpen]);
 
   return (
-    <div className="flex flex-col h-screen w-full bg-background overflow-hidden relative font-sans text-neutral-900 dark:text-neutral-100">
-      {/* 1. Global Layer */}
+    <div className="flex flex-col h-screen w-full bg-background overflow-hidden relative">
+      {/* Global Layer */}
       <FloatingQueue />
 
-      {/* 2. MOBILE DRAWER OVERLAY */}
+      {/* Mobile Drawer Overlay */}
       {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-neutral-900/40 backdrop-blur-[2px] z-[60] md:hidden animate-in fade-in duration-200"
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] md:hidden animate-fade-in"
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
 
-      {/* 3. MOBILE DRAWER */}
+      {/* Mobile Drawer */}
       <div className={cn(
-        "fixed inset-y-0 left-0 z-[70] w-[260px] bg-card shadow-2xl transform transition-transform duration-300 ease-in-out md:hidden",
+        "fixed inset-y-0 left-0 z-[70] w-[240px] bg-card border-r border-border/50 shadow-overlay transform transition-transform duration-250 ease-out md:hidden",
         isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         <Sidebar isMobile={true} />
       </div>
 
-      {/* 4. HEADER (Fixed height, no sticky inside flex-col) */}
+      {/* Header */}
       <IntegrityBanner />
       <Header />
 
       <div className="flex flex-1 overflow-hidden relative">
-        {/* 5. DESKTOP SIDEBAR */}
+        {/* Desktop Sidebar */}
         <aside className={cn(
-          "hidden md:flex flex-col h-full bg-card border-r border-neutral-100 dark:border-neutral-800 transition-all duration-300 ease-in-out overflow-hidden shrink-0",
-          isDesktopSidebarOpen ? "w-[220px]" : "w-0 border-r-0"
+          "hidden md:flex flex-col h-full bg-card border-r border-border/50 transition-all duration-300 ease-out overflow-hidden shrink-0",
+          isDesktopSidebarOpen ? "w-[200px]" : "w-0 border-r-0"
         )}>
-          <div className="w-[220px] h-full">
+          <div className="w-[200px] h-full">
             <Sidebar isMobile={false} />
           </div>
         </aside>
 
-        {/* 6. MAIN CONTENT */}
+        {/* Main Content */}
         <main className="flex-1 flex flex-col min-w-0 bg-background relative overflow-hidden">
-          <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth pb-20 md:pb-6">
-            <div className="w-full max-w-[1600px] mx-auto p-3 md:p-4 lg:p-6">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth pb-16 md:pb-5">
+            <div className="w-full max-w-[1600px] mx-auto p-2.5 md:p-3 lg:p-5">
               {children}
             </div>
           </div>
-          
-          {/* 7. MOBILE BOTTOM NAV */}
+
+          {/* Mobile Bottom Nav */}
           <BottomNav />
         </main>
       </div>

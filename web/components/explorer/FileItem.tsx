@@ -239,7 +239,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
     if (["jpg", "jpeg", "png", "webp", "gif"].includes(ext || "")) return <FileImage className="text-blue-500" size={viewMode === "grid" ? 28 : 18} />;
     if (["zip", "rar", "7z", "tar"].includes(ext || "")) return <FileArchive className="text-purple-500" size={viewMode === "grid" ? 28 : 18} />;
     if (["pdf", "doc", "docx", "txt"].includes(ext || "")) return <FileText className="text-red-500" size={viewMode === "grid" ? 28 : 18} />;
-    return <File className="text-neutral-400" size={viewMode === "grid" ? 28 : 18} />;
+    return <File className="text-muted-foreground" size={viewMode === "grid" ? 28 : 18} />;
   };
 
   const isCompact = density === "compact";
@@ -254,8 +254,8 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
         onPointerLeave={cancelLongPress}
         className={cn(
           "group relative bg-card border transition-all cursor-pointer select-none overflow-hidden",
-          isCompact ? "p-2 rounded-xl" : "p-3 rounded-2xl",
-          isSelected ? "border-primary bg-primary/5 ring-2 ring-primary/20" : "border-neutral-200 dark:border-neutral-800",
+          isCompact ? "p-2 rounded-xl" : "p-3 rounded-lg",
+          isSelected ? "border-primary bg-primary/5 ring-2 ring-primary/20" : "border-border",
           isTrashView && "opacity-80 grayscale-[0.3]"
         )}
       >
@@ -270,7 +270,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
         </div>
 
         <div className={cn(
-          "flex items-center justify-center bg-neutral-50 dark:bg-neutral-900 rounded-lg mb-2 overflow-hidden",
+          "flex items-center justify-center bg-surface-1 rounded-lg mb-2 overflow-hidden",
           isCompact ? "aspect-square" : "aspect-video"
         )}>
           {file.thumbnail ? (
@@ -288,7 +288,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
         
         <div className="space-y-0.5">
           <p className="text-[11px] font-bold truncate pr-5 tracking-tight">{file.filename}</p>
-          <div className="flex items-center text-[9px] text-neutral-400 font-black uppercase tracking-tighter">
+          <div className="flex items-center text-[10px] text-muted-foreground/60 font-medium uppercase tracking-wider">
             <span>{formatSize(file.size)}</span>
           </div>
         </div>
@@ -298,7 +298,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
           disabled={starMutation.isPending}
           className={cn(
             "absolute top-1.5 right-7 p-1.5 transition-all",
-            file.is_starred ? "text-amber-500 opacity-100" : "text-neutral-400 hover:text-amber-500 opacity-0 group-hover:opacity-100"
+            file.is_starred ? "text-amber-500 opacity-100" : "text-muted-foreground/40 hover:text-amber-500 opacity-0 group-hover:opacity-100"
           )}
         >
           <Star size={14} fill={file.is_starred ? "currentColor" : "none"} />
@@ -306,7 +306,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
 
         <button 
           onClick={(e) => { e.stopPropagation(); setShowMobileMenu(true); }}
-          className="absolute top-1.5 right-1.5 p-1.5 text-neutral-400 hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+          className="absolute top-1.5 right-1.5 p-1.5 text-muted-foreground/40 hover:text-foreground opacity-0 group-hover:opacity-100 transition-opacity"
         >
           <MoreVertical size={14} />
         </button>
@@ -342,7 +342,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
       className={cn(
         "group flex flex-col md:grid md:grid-cols-12 md:items-center gap-1 md:gap-3 border transition-all cursor-pointer relative select-none",
         isCompact ? "p-2 md:py-1.5" : "p-3 md:py-2",
-        isSelected ? "bg-primary/5 border-primary md:rounded-xl ring-1 ring-primary/10" : "bg-card border-transparent md:hover:bg-neutral-50 dark:md:hover:bg-neutral-900/50 md:rounded-xl",
+        isSelected ? "bg-primary/5 border-primary md:rounded-xl ring-1 ring-primary/10" : "bg-card border-transparent md:hover:bg-surface-1 md:rounded-xl",
         isTrashView && "opacity-75"
       )}
     >
@@ -351,30 +351,30 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
           onClick={handleCheckboxClick}
           className={cn(
             "mr-2 shrink-0 transition-all",
-            isSelected ? "text-primary opacity-100" : "text-neutral-300 dark:text-neutral-700 opacity-0 group-hover:opacity-100"
+            isSelected ? "text-primary opacity-100" : "text-muted-foreground/40 opacity-0 group-hover:opacity-100"
           )}
         >
           {isSelected ? <CheckCircle2 size={16} /> : <Circle size={16} />}
         </div>
 
         <div className={cn(
-          "bg-neutral-100 dark:bg-neutral-800 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden",
+          "bg-surface-2 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden",
           isCompact ? "w-7 h-7" : "w-8 h-8"
         )}>
           {file.thumbnail ? (
             <img src={`data:image/jpeg;base64,${file.thumbnail}`} className="w-full h-full object-cover" alt="" />
           ) : getFileIcon()}
         </div>
-        <span className="ml-3 text-xs md:text-sm font-bold truncate tracking-tight text-neutral-800 dark:text-neutral-200">
+        <span className="ml-3 text-xs md:text-sm font-bold truncate tracking-tight text-foreground">
           {file.filename}
         </span>
       </div>
 
-      <div className="hidden md:block col-span-2 text-[10px] text-neutral-500 font-bold uppercase tracking-tighter">
+      <div className="hidden md:block col-span-2 text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
         {formatSize(file.size)}
       </div>
 
-      <div className="hidden md:block col-span-3 text-[10px] text-neutral-400 font-medium">
+      <div className="hidden md:block col-span-3 text-[10px] text-muted-foreground/60 font-medium">
         {isTrashView && file.deleted_at 
           ? `Deleted ${formatLocalTime(file.deleted_at)}`
           : formatLocalTime(file.created_at)}
@@ -389,7 +389,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
                 disabled={starMutation.isPending}
                 className={cn(
                   "p-1.5 rounded-full transition-colors",
-                  file.is_starred ? "text-amber-500" : "text-neutral-400 hover:text-amber-500"
+                  file.is_starred ? "text-amber-500" : "text-muted-foreground/40 hover:text-amber-500"
                 )}
                 title={file.is_starred ? "Remove from Starred" : "Add to Starred"}
               >
@@ -399,7 +399,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
             {isTrashView ? (
               <button 
                   onClick={(e) => { e.stopPropagation(); restoreMutation.mutate(); }}
-                  className="p-1.5 hover:bg-white dark:hover:bg-neutral-800 rounded-full text-neutral-400 hover:text-primary transition-colors shadow-sm"
+                  className="p-1.5 hover:bg-surface-2 rounded-full text-muted-foreground/40 hover:text-primary transition-colors shadow-sm"
                   title="Restore"
                 >
                   <RotateCcw size={14} />
@@ -410,14 +410,14 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
                   <button 
                     onClick={handleDownload}
                     disabled={isDownloading}
-                    className="p-1.5 hover:bg-white dark:hover:bg-neutral-800 rounded-full text-neutral-400 hover:text-primary transition-colors shadow-sm"
+                    className="p-1.5 hover:bg-surface-2 rounded-full text-muted-foreground/40 hover:text-primary transition-colors shadow-sm"
                   >
                     {isDownloading ? <Loader2 size={14} className="animate-spin" /> : <Download size={14} />}
                   </button>
                 )}
-                <button 
+                <button
                   onClick={handleRename}
-                  className="p-1.5 hover:bg-white dark:hover:bg-neutral-800 rounded-full text-neutral-400 hover:text-primary transition-colors shadow-sm"
+                  className="p-1.5 hover:bg-surface-2 rounded-full text-muted-foreground/40 hover:text-primary transition-colors shadow-sm"
                 >
                   <Edit2 size={14} />
                 </button>
@@ -425,7 +425,7 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
             )}
             <button 
               onClick={handleDelete}
-              className="p-1.5 hover:bg-white dark:hover:bg-neutral-800 rounded-full text-neutral-400 hover:text-destructive transition-colors shadow-sm"
+              className="p-1.5 hover:bg-surface-2 rounded-full text-muted-foreground/40 hover:text-destructive transition-colors shadow-sm"
             >
               <Trash size={14} />
             </button>
@@ -434,13 +434,13 @@ export function FileItem({ file, viewMode, currentPath, isTrashView = false, onP
 
         <button 
           onClick={(e) => { e.stopPropagation(); setShowMobileMenu(true); }}
-          className="md:hidden p-2 text-neutral-400 active:text-foreground active:bg-neutral-100 dark:active:bg-neutral-800 rounded-full"
+          className="md:hidden p-2 text-muted-foreground/40 active:text-foreground active:bg-surface-2 rounded-full"
         >
           <MoreVertical size={18} />
         </button>
       </div>
 
-      <div className="md:hidden flex items-center space-x-2 text-[9px] text-neutral-400 pl-12 font-black uppercase tracking-tighter">
+      <div className="md:hidden flex items-center space-x-2 text-[10px] text-muted-foreground/60 pl-12 font-medium uppercase tracking-wider">
         <span>{formatSize(file.size)}</span>
         <span>•</span>
         <span>{isTrashView && file.deleted_at ? `Deleted ${formatLocalTime(file.deleted_at)}` : formatLocalTime(file.created_at)}</span>
@@ -506,13 +506,13 @@ function ActionMenu({
   return createPortal(
     <div className="fixed inset-0 z-[800] flex flex-col justify-end md:justify-center items-center p-0 md:p-6 animate-in fade-in duration-200">
       <div 
-        className="absolute inset-0 bg-neutral-950/60 backdrop-blur-sm" 
+        className="absolute inset-0 bg-background/60 backdrop-blur-sm" 
         onClick={onClose} 
       />
       
       <div 
         onClick={(e) => e.stopPropagation()}
-        className="relative bg-card w-full md:max-w-sm rounded-t-[2rem] md:rounded-[1.5rem] shadow-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden animate-in slide-in-from-bottom-full md:slide-in-from-bottom-4 duration-300"
+        className="relative bg-card w-full md:max-w-sm rounded-t-xl md:rounded-[1.5rem] shadow-2xl border border-border overflow-hidden animate-in slide-in-from-bottom-full md:slide-in-from-bottom-4 duration-300"
       >
         <div className="p-4 border-b flex items-center justify-between">
           <div className="flex items-center min-w-0 pr-4">
@@ -522,12 +522,12 @@ function ActionMenu({
                ) : (file.is_folder ? <Folder size={20} /> : <File size={20} />)}
             </div>
             <div className="ml-3 min-w-0">
-              <p className="text-sm font-black truncate tracking-tight">{file.filename}</p>
-              <p className="text-[9px] text-neutral-400 font-black uppercase tracking-widest">{formatSize(file.size)}</p>
+              <p className="text-sm font-semibold truncate tracking-tight">{file.filename}</p>
+              <p className="text-[10px] text-muted-foreground/60 font-medium uppercase tracking-wider">{formatSize(file.size)}</p>
             </div>
           </div>
-          <button onClick={onClose} className="p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors">
-            <X size={18} className="text-neutral-400" />
+          <button onClick={onClose} className="p-1.5 hover:bg-surface-2 rounded-full transition-colors">
+            <X size={18} className="text-muted-foreground" />
           </button>
         </div>
 
@@ -535,7 +535,7 @@ function ActionMenu({
           {isTrashView ? (
              <button 
                 onClick={onRestore}
-                className="w-full flex items-center space-x-3 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl transition-all active:scale-95"
+                className="w-full flex items-center space-x-3 p-3 hover:bg-surface-2 rounded-xl transition-all active:scale-95"
               >
                 <div className="text-primary p-2 bg-primary/10 rounded-lg"><RotateCcw size={18} /></div>
                 <span className="text-xs font-bold">Restore to My Files</span>
@@ -545,9 +545,9 @@ function ActionMenu({
               <button 
                 onClick={onStar}
                 disabled={isStarring}
-                className="w-full flex items-center space-x-3 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl transition-all active:scale-95"
+                className="w-full flex items-center space-x-3 p-3 hover:bg-surface-2 rounded-xl transition-all active:scale-95"
               >
-                <div className={cn("p-2 rounded-lg", file.is_starred ? "text-amber-500 bg-amber-500/10" : "text-neutral-500 bg-neutral-100 dark:bg-neutral-800")}>
+                <div className={cn("p-2 rounded-lg", file.is_starred ? "text-amber-500 bg-amber-500/10" : "text-muted-foreground bg-surface-2")}>
                   <Star size={18} fill={file.is_starred ? "currentColor" : "none"} />
                 </div>
                 <span className="text-xs font-bold">{file.is_starred ? "Remove from Favorites" : "Add to Favorites"}</span>
@@ -558,7 +558,7 @@ function ActionMenu({
                 <button 
                   onClick={onDownload}
                   disabled={isDownloading}
-                  className="w-full flex items-center space-x-3 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-900 rounded-xl transition-all active:scale-95"
+                  className="w-full flex items-center space-x-3 p-3 hover:bg-surface-2 rounded-xl transition-all active:scale-95"
                 >
                   <div className="text-primary p-2 bg-primary/10 rounded-lg"><Download size={18} /></div>
                   <span className="text-xs font-bold">Download File</span>
@@ -569,9 +569,9 @@ function ActionMenu({
               <button 
                 onClick={onRename}
                 disabled={isRenaming}
-                className="w-full flex items-center space-x-3 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl transition-all active:scale-95"
+                className="w-full flex items-center space-x-3 p-3 hover:bg-surface-2 rounded-xl transition-all active:scale-95"
               >
-                <div className="text-neutral-500 p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg"><Edit2 size={18} /></div>
+                <div className="text-muted-foreground p-2 bg-surface-2 rounded-lg"><Edit2 size={18} /></div>
                 <span className="text-xs font-bold">Rename</span>
                 {isRenaming && <Loader2 size={14} className="animate-spin ml-auto" />}
               </button>
@@ -581,23 +581,23 @@ function ActionMenu({
                   onMove?.();
                   onClose();
                 }}
-                className="w-full flex items-center space-x-3 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl transition-all active:scale-95"
+                className="w-full flex items-center space-x-3 p-3 hover:bg-surface-2 rounded-xl transition-all active:scale-95"
               >
-                <div className="text-neutral-500 p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg"><FolderOpen size={18} /></div>
+                <div className="text-muted-foreground p-2 bg-surface-2 rounded-lg"><FolderOpen size={18} /></div>
                 <span className="text-xs font-bold">Move</span>
               </button>
 
-              <button className="w-full flex items-center space-x-3 p-3 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-xl transition-all">
-                <div className="text-neutral-500 p-2 bg-neutral-100 dark:bg-neutral-800 rounded-lg"><Info size={18} /></div>
+              <button className="w-full flex items-center space-x-3 p-3 hover:bg-surface-2 rounded-xl transition-all">
+                <div className="text-muted-foreground p-2 bg-surface-2 rounded-lg"><Info size={18} /></div>
                 <div className="text-left">
                   <span className="block text-xs font-bold">Metadata Info</span>
-                  <span className="block text-[9px] text-neutral-400 font-black uppercase tracking-tighter">{file.is_folder ? "Folder" : file.status}</span>
+                  <span className="block text-[10px] text-muted-foreground/60 font-medium uppercase tracking-wider">{file.is_folder ? "Folder" : file.status}</span>
                 </div>
               </button>
             </>
           )}
 
-          <div className="h-px bg-neutral-100 dark:bg-neutral-800 my-1.5 mx-3" />
+          <div className="h-px border-border my-1.5 mx-3" />
 
           <button 
             onClick={onDelete}
@@ -605,13 +605,13 @@ function ActionMenu({
             className="w-full flex items-center space-x-3 p-3 hover:bg-destructive/5 text-destructive rounded-xl transition-all active:scale-95"
           >
             <div className="p-2 bg-destructive/10 rounded-lg"><Trash size={18} /></div>
-            <span className="text-xs font-black">{isTrashView ? "Delete permanently" : "Move to Trash"}</span>
+            <span className="text-xs font-semibold">{isTrashView ? "Delete permanently" : "Move to Trash"}</span>
             {isDeleting && <Loader2 size={14} className="animate-spin ml-auto" />}
           </button>
         </div>
 
         <div className="p-4 md:hidden pb-[calc(1rem+env(safe-area-inset-bottom))]">
-          <Button variant="outline" className="w-full rounded-xl h-11 font-black text-[10px] uppercase tracking-widest border-neutral-200" onClick={onClose}>
+          <Button variant="outline" className="w-full rounded-xl h-11 font-semibold text-[10px] uppercase tracking-wider border-border" onClick={onClose}>
             Dismiss
           </Button>
         </div>

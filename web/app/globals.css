@@ -4,65 +4,96 @@
 
 @layer base {
   :root {
+    /* ── Light Mode ── */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --foreground: 240 10% 4%;
+    --card: 0 0% 98%;
+    --card-foreground: 240 10% 4%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.75rem;
+    --popover-foreground: 240 10% 4%;
+    --primary: 206 60% 55%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4% 95%;
+    --secondary-foreground: 240 6% 10%;
+    --muted: 240 4% 96%;
+    --muted-foreground: 240 4% 46%;
+    --accent: 240 4% 93%;
+    --accent-foreground: 240 6% 10%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 206 60% 55%;
+    --radius: 0.375rem;
 
-    /* Density Tokens (Standard/Comfortable) */
-    --spacing-xs: 0.2rem;
-    --spacing-sm: 0.4rem;
+    /* ── Builder's Edge Surface Hierarchy ── */
+    --surface-ground: 0 0% 100%;
+    --surface-1: 0 0% 98%;
+    --surface-2: 0 0% 96%;
+    --surface-3: 0 0% 93%;
+    --surface-border: 0 0% 90%;
+    --surface-border-strong: 0 0% 85%;
+
+    /* ── Spacing Scale (4px base) ── */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
     --spacing-md: 0.75rem;
-    --spacing-lg: 1.25rem;
-    --spacing-xl: 1.75rem;
+    --spacing-lg: 1rem;
+    --spacing-xl: 1.5rem;
+    --spacing-2xl: 2rem;
+
+    /* ── Status Colors ── */
+    --status-success: 142 71% 45%;
+    --status-warning: 38 92% 50%;
+    --status-error: 0 84% 60%;
+    --status-info: 206 60% 55%;
   }
 
   .dark {
-    --background: 240 2% 8%;      /* #131314 */
-    --foreground: 0 0% 90%;       /* #e3e3e3 */
-    --card: 210 2% 11%;           /* #1e1f20 */
-    --card-foreground: 0 0% 90%;
-    --popover: 210 2% 11%;
-    --popover-foreground: 0 0% 90%;
-    --primary: 217 89% 76%;       /* #8ab4f8 - Google Blue */
-    --primary-foreground: 240 2% 10%;
-    --secondary: 210 2% 16%;      /* #2d2f31 */
-    --secondary-foreground: 0 0% 90%;
-    --muted: 210 2% 16%;
-    --muted-foreground: 210 2% 70%; /* #c4c7c5 */
-    --accent: 210 2% 20%;
-    --accent-foreground: 0 0% 95%;
-    --destructive: 0 80% 65%;
+    /* ── Dark Mode — Builder's Edge ── */
+    --background: 230 6% 5%;       /* #08090A */
+    --foreground: 230 5% 96%;      /* #F7F8F8 */
+    --card: 230 6% 8%;             /* #111214 — Surface 1 */
+    --card-foreground: 230 5% 96%;
+    --popover: 230 6% 10%;         /* Surface 2 */
+    --popover-foreground: 230 5% 96%;
+    --primary: 206 60% 65%;        /* #6CB4EE — Electric blue */
+    --primary-foreground: 230 6% 5%;
+    --secondary: 230 6% 12%;       /* Surface 2 */
+    --secondary-foreground: 230 5% 96%;
+    --muted: 230 6% 12%;
+    --muted-foreground: 230 4% 55%; /* #878A96 */
+    --accent: 230 6% 15%;          /* Surface 3 */
+    --accent-foreground: 230 5% 96%;
+    --destructive: 0 72% 58%;
     --destructive-foreground: 0 0% 100%;
-    --border: 210 2% 18%;
-    --input: 210 2% 18%;
-    --ring: 217 89% 76%;
+    --border: 230 5% 12%;          /* Hairline — rgba(255,255,255,0.06) */
+    --input: 230 5% 12%;
+    --ring: 206 60% 65%;
+
+    /* ── Builder's Edge Surface Hierarchy ── */
+    --surface-ground: 230 6% 5%;   /* #08090A */
+    --surface-1: 230 6% 8%;        /* #111214 */
+    --surface-2: 230 6% 11%;       /* #18191C */
+    --surface-3: 230 6% 14%;       /* #1E2024 */
+    --surface-border: 230 5% 12%;
+    --surface-border-strong: 230 5% 18%;
+
+    /* ── Status Colors ── */
+    --status-success: 142 71% 55%;
+    --status-warning: 38 92% 55%;
+    --status-error: 0 72% 58%;
+    --status-info: 206 60% 65%;
   }
 
-  /* Accent Variations */
+  /* ── Accent Variations ── */
   .accent-green {
-    --primary: 142 70% 45%;
-    --ring: 142 70% 45%;
+    --primary: 142 71% 45%;
+    --ring: 142 71% 45%;
   }
   .dark .accent-green {
-    --primary: 142 70% 65%;
-    --ring: 142 70% 65%;
+    --primary: 142 71% 55%;
+    --ring: 142 71% 55%;
   }
 
   .accent-purple {
@@ -70,18 +101,19 @@
     --ring: 263 70% 50%;
   }
   .dark .accent-purple {
-    --primary: 263 70% 70%;
-    --ring: 263 70% 70%;
+    --primary: 263 70% 65%;
+    --ring: 263 70% 65%;
   }
 
-  /* Density Variations */
+  /* ── Density Variations ── */
   .density-compact {
-    --spacing-xs: 0.1rem;
-    --spacing-sm: 0.2rem;
+    --spacing-xs: 0.125rem;
+    --spacing-sm: 0.25rem;
     --spacing-md: 0.5rem;
     --spacing-lg: 0.75rem;
-    --spacing-xl: 1.25rem;
-    --radius: 0.4rem;
+    --spacing-xl: 1rem;
+    --spacing-2xl: 1.5rem;
+    --radius: 0.25rem;
   }
 }
 
@@ -90,14 +122,22 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground antialiased selection:bg-primary/30 text-[13px];
+    @apply bg-background text-foreground antialiased;
+    font-size: 13px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+  ::selection {
+    @apply bg-primary/25 text-foreground;
   }
 }
 
-/* Custom Scrollbar */
+/* ── Custom Scrollbar — Builder's Edge ── */
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -105,28 +145,82 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-neutral-400/10 dark:bg-neutral-600/30 rounded-full border-4 border-transparent bg-clip-content;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-neutral-400/30 dark:bg-neutral-600/50;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+}
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-/* Specific transitions for theme toggle and sidebar */
+/* ── Theme Transitions ── */
 .theme-transition {
-  transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out;
+  transition: background-color 200ms ease-in-out, border-color 200ms ease-in-out, color 200ms ease-in-out;
 }
 
-body {
-  @apply bg-background text-foreground antialiased selection:bg-primary/30 text-[13px];
-  overflow-x: hidden;
+/* ── Keyboard Shortcut Chip ── */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.25rem;
+  padding: 0 0.25rem;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1;
+  color: var(--muted-foreground);
+  background: var(--surface-2);
+  border: 1px solid var(--surface-border-strong);
+  border-radius: 4px;
+  box-shadow: 0 1px 0 var(--surface-border-strong);
+}
+
+/* ── Hairline Divider ── */
+.hairline {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.06);
+}
+.dark .hairline {
+  background: rgba(255, 255, 255, 0.06);
+}
+.light .hairline,
+:root:not(.dark) .hairline {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Accent Dot ── */
+.accent-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+/* ── Mono Text Utility ── */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }

@@ -63,14 +63,14 @@ export default function TrashPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500 max-w-6xl mx-auto">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card border border-neutral-200 dark:border-neutral-800 p-6 md:p-8 rounded-[2rem] shadow-sm">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card border border-border/50 p-6 md:p-8 rounded-xl shadow-sm">
         <div className="flex items-center space-x-5">
           <div className="p-4 bg-destructive/10 text-destructive rounded-2xl">
             <Trash2 size={28} />
           </div>
           <div>
-            <h1 className="text-3xl font-black tracking-tight">Trash Bin</h1>
-            <p className="text-xs text-neutral-400 font-bold uppercase tracking-widest mt-1">Items will be auto-deleted after 30 days</p>
+            <h1 className="text-3xl font-display font-bold tracking-tight">Trash Bin</h1>
+            <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider mt-1">Items will be auto-deleted after 30 days</p>
           </div>
         </div>
         
@@ -96,12 +96,12 @@ export default function TrashPage() {
 
       {/* Content Area */}
       {isLoading ? (
-        <div className="flex flex-col items-center justify-center py-32 text-neutral-400">
+        <div className="flex flex-col items-center justify-center py-32 text-muted-foreground/60">
           <Loader2 className="animate-spin mb-4" size={40} strokeWidth={1.5} />
           <p className="text-sm font-medium animate-pulse">Scanning trash...</p>
         </div>
       ) : trashedFiles?.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-32 bg-neutral-50/50 dark:bg-neutral-900/20 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-3xl text-neutral-400">
+        <div className="flex flex-col items-center justify-center py-32 bg-surface-1/50 dark:bg-surface-1/20 border-2 border-dashed border-border/50 rounded-3xl text-muted-foreground/60">
           <Trash size={64} strokeWidth={1} className="mb-4 opacity-20" />
           <p className="text-lg font-medium">Trash is empty</p>
           <p className="text-sm">Nice work keeping things tidy.</p>

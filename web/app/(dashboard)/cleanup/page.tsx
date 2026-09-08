@@ -238,14 +238,14 @@ export default function CleanupPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500 max-w-6xl mx-auto pb-32">
       {/* 1. Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card border border-neutral-200 dark:border-neutral-800 p-6 md:p-8 rounded-[2rem] shadow-sm relative overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card border border-border/50 p-6 md:p-8 rounded-xl shadow-sm relative overflow-hidden">
         <div className="flex items-center space-x-5 relative z-10">
           <div className="p-4 bg-primary/10 text-primary rounded-2xl">
             <Sparkles size={28} />
           </div>
           <div>
-            <h1 className="text-3xl font-black tracking-tight">Storage Cleanup</h1>
-            <p className="text-xs text-neutral-400 font-bold uppercase tracking-widest mt-1">Optimize your personal cloud storage</p>
+            <h1 className="text-3xl font-display font-bold tracking-tight">Storage Cleanup</h1>
+            <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider mt-1">Optimize your personal cloud storage</p>
           </div>
         </div>
       </div>
@@ -253,33 +253,33 @@ export default function CleanupPage() {
       {/* 2. STATS SUMMARY */}
       {summary && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-card border border-neutral-200 dark:border-neutral-800 p-5 rounded-2xl flex items-center space-x-4 shadow-sm hover:border-neutral-300 dark:hover:border-neutral-700 transition-all">
+          <div className="bg-card border border-border/50 p-5 rounded-2xl flex items-center space-x-4 shadow-sm hover:border-border/50 dark:hover:border-border/50 transition-all">
             <div className="p-3 bg-indigo-500/10 text-indigo-500 rounded-xl shrink-0">
               <Layers size={22} />
             </div>
             <div>
-              <p className="text-2xl font-black">{summary.duplicate_groups_count}</p>
-              <p className="text-xs text-neutral-400 font-bold uppercase tracking-wider">Duplicate Groups</p>
+              <p className="text-2xl font-semibold font-mono tabular-nums">{summary.duplicate_groups_count}</p>
+              <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider">Duplicate Groups</p>
             </div>
           </div>
           
-          <div className="bg-card border border-neutral-200 dark:border-neutral-800 p-5 rounded-2xl flex items-center space-x-4 shadow-sm hover:border-neutral-300 dark:hover:border-neutral-700 transition-all">
+          <div className="bg-card border border-border/50 p-5 rounded-2xl flex items-center space-x-4 shadow-sm hover:border-border/50 dark:hover:border-border/50 transition-all">
             <div className="p-3 bg-amber-500/10 text-amber-500 rounded-xl shrink-0">
               <Copy size={22} />
             </div>
             <div>
-              <p className="text-2xl font-black">{summary.duplicate_files_count}</p>
-              <p className="text-xs text-neutral-400 font-bold uppercase tracking-wider">Redundant Files</p>
+              <p className="text-2xl font-semibold font-mono tabular-nums">{summary.duplicate_files_count}</p>
+              <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider">Redundant Files</p>
             </div>
           </div>
           
-          <div className="bg-card border border-neutral-200 dark:border-neutral-800 p-5 rounded-2xl flex items-center space-x-4 shadow-sm hover:border-neutral-300 dark:hover:border-neutral-700 transition-all">
+          <div className="bg-card border border-border/50 p-5 rounded-2xl flex items-center space-x-4 shadow-sm hover:border-border/50 dark:hover:border-border/50 transition-all">
             <div className="p-3 bg-rose-500/10 text-rose-500 rounded-xl shrink-0">
               <Trash2 size={22} />
             </div>
             <div>
-              <p className="text-2xl font-black text-rose-500">{formatSize(summary.recoverable_size)}</p>
-              <p className="text-xs text-neutral-400 font-bold uppercase tracking-wider">Recoverable Storage</p>
+              <p className="text-2xl font-semibold font-mono tabular-nums text-rose-500">{formatSize(summary.recoverable_size)}</p>
+              <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider">Recoverable Storage</p>
             </div>
           </div>
         </div>
@@ -287,12 +287,12 @@ export default function CleanupPage() {
 
       {/* 3. SMART CLEANUP ACTIONS */}
       {summary && summary.duplicate_groups_count > 0 && (
-        <div className="bg-card border border-neutral-200 dark:border-neutral-800 p-6 rounded-3xl space-y-6 shadow-sm">
+        <div className="bg-card border border-border/50 p-6 rounded-3xl space-y-6 shadow-sm">
           <div className="flex items-center space-x-3">
             <Sparkles className="text-primary" size={20} />
-            <h2 className="text-lg font-black tracking-tight">Smart Clean Rules</h2>
+            <h2 className="text-lg font-display font-bold tracking-tight">Smart Clean Rules</h2>
           </div>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 max-w-3xl">
+          <p className="text-sm text-muted-foreground dark:text-muted-foreground/60 max-w-3xl">
             Automatically resolve all duplicate files by choosing one of the preservation strategies below. 
             One copy will always be preserved, and the duplicates will be moved to the Trash Bin.
           </p>
@@ -300,28 +300,28 @@ export default function CleanupPage() {
             <button
               onClick={() => handleGlobalCleanup("keep_newest")}
               disabled={cleanupMutation.isPending}
-              className="flex flex-col items-center justify-center p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 hover:border-blue-500/50 dark:hover:border-blue-500/40 hover:bg-blue-500/5 dark:hover:bg-blue-500/5 transition-all text-center space-y-2 group"
+              className="flex flex-col items-center justify-center p-5 rounded-2xl border border-border/50 hover:border-blue-500/50 dark:hover:border-blue-500/40 hover:bg-blue-500/5 dark:hover:bg-blue-500/5 transition-all text-center space-y-2 group"
             >
               <span className="font-bold text-sm group-hover:text-blue-500 transition-colors">Keep Newest uploaded</span>
-              <span className="text-xs text-neutral-400">Trashes older files in each group</span>
+              <span className="text-xs text-muted-foreground/60">Trashes older files in each group</span>
             </button>
             
             <button
               onClick={() => handleGlobalCleanup("keep_oldest")}
               disabled={cleanupMutation.isPending}
-              className="flex flex-col items-center justify-center p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 hover:border-purple-500/50 dark:hover:border-purple-500/40 hover:bg-purple-500/5 dark:hover:bg-purple-500/5 transition-all text-center space-y-2 group"
+              className="flex flex-col items-center justify-center p-5 rounded-2xl border border-border/50 hover:border-purple-500/50 dark:hover:border-purple-500/40 hover:bg-purple-500/5 dark:hover:bg-purple-500/5 transition-all text-center space-y-2 group"
             >
               <span className="font-bold text-sm group-hover:text-purple-500 transition-colors">Keep Oldest uploaded</span>
-              <span className="text-xs text-neutral-400">Trashes newer files in each group</span>
+              <span className="text-xs text-muted-foreground/60">Trashes newer files in each group</span>
             </button>
 
             <button
               onClick={() => handleGlobalCleanup("keep_starred")}
               disabled={cleanupMutation.isPending}
-              className="flex flex-col items-center justify-center p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 hover:border-amber-500/50 dark:hover:border-amber-500/40 hover:bg-amber-500/5 dark:hover:bg-amber-500/5 transition-all text-center space-y-2 group"
+              className="flex flex-col items-center justify-center p-5 rounded-2xl border border-border/50 hover:border-amber-500/50 dark:hover:border-amber-500/40 hover:bg-amber-500/5 dark:hover:bg-amber-500/5 transition-all text-center space-y-2 group"
             >
               <span className="font-bold text-sm group-hover:text-amber-500 transition-colors">Keep Starred copies</span>
-              <span className="text-xs text-neutral-400">Keep favorites; fallback to newest copy</span>
+              <span className="text-xs text-muted-foreground/60">Keep favorites; fallback to newest copy</span>
             </button>
           </div>
         </div>
@@ -330,23 +330,23 @@ export default function CleanupPage() {
       {/* 4. DUPLICATE GROUPS SECTION */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-xl font-black tracking-tight">Duplicate Groups List</h2>
+          <h2 className="text-xl font-display font-bold tracking-tight">Duplicate Groups List</h2>
           {groups && groups.length > 0 && (
-            <span className="text-xs text-neutral-400 font-bold uppercase tracking-wider">
+            <span className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider">
               {groups.length} groups found
             </span>
           )}
         </div>
 
         {isLoading ? (
-          <div className="flex flex-col items-center justify-center py-32 text-neutral-400 bg-card border border-neutral-200 dark:border-neutral-800 rounded-3xl">
+          <div className="flex flex-col items-center justify-center py-32 text-muted-foreground/60 bg-card border border-border/50 rounded-3xl">
             <Loader2 className="animate-spin mb-4" size={40} strokeWidth={1.5} />
             <p className="text-sm font-medium animate-pulse">Scanning database for duplicate files...</p>
           </div>
         ) : !groups || groups.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-24 bg-neutral-50/50 dark:bg-neutral-900/20 border-2 border-dashed border-neutral-200 dark:border-neutral-800 rounded-3xl text-neutral-400 text-center px-4">
+          <div className="flex flex-col items-center justify-center py-24 bg-surface-1/50 dark:bg-surface-1/20 border-2 border-dashed border-border/50 rounded-3xl text-muted-foreground/60 text-center px-4">
             <CheckCircle2 size={64} strokeWidth={1} className="mb-4 text-emerald-500 opacity-80" />
-            <p className="text-lg font-bold text-neutral-800 dark:text-neutral-200">No duplicate files found</p>
+            <p className="text-lg font-bold text-foreground dark:text-foreground">No duplicate files found</p>
             <p className="text-sm mt-1 max-w-sm">Fantastic! Your TDrive storage is clean of duplicate hashes.</p>
           </div>
         ) : (
@@ -359,20 +359,20 @@ export default function CleanupPage() {
               return (
                 <div 
                   key={group.sha256}
-                  className="bg-card border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                  className="bg-card border border-border/50 rounded-2xl shadow-sm hover:shadow-md transition-shadow overflow-hidden"
                 >
                   {/* Group Card Header */}
-                  <div className="p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-100 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/10">
+                  <div className="p-4 md:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border/50 bg-surface-1/50 dark:bg-surface-1/10">
                     <div className="space-y-1">
                       <div className="flex items-center space-x-2 flex-wrap gap-y-1">
-                        <span className="font-extrabold text-sm md:text-base text-neutral-800 dark:text-neutral-200 break-all truncate max-w-md block">
+                        <span className="font-extrabold text-sm md:text-base text-foreground dark:text-foreground break-all truncate max-w-md block">
                           {group.files[0]?.filename || "Unnamed File"}
                         </span>
-                        <span className="px-2 py-0.5 text-[10px] font-black uppercase tracking-wider bg-neutral-200 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 rounded-md">
+                        <span className="px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wider bg-border/50 dark:bg-surface-2 text-muted-foreground dark:text-muted-foreground/60 rounded-md font-mono tabular-nums">
                           {formatSize(group.size)}
                         </span>
                       </div>
-                      <div className="flex items-center space-x-2 text-xs text-neutral-400 font-medium">
+                      <div className="flex items-center space-x-2 text-xs text-muted-foreground/60 font-medium">
                         <span className="truncate max-w-[150px] md:max-w-[300px]">SHA256: {group.sha256}</span>
                         <span>•</span>
                         <span>{group.files.length} copies found ({redundantCount} unneeded)</span>
@@ -381,7 +381,7 @@ export default function CleanupPage() {
 
                     <div className="flex flex-wrap items-center gap-2 shrink-0">
                       {/* Selectors */}
-                      <span className="text-[10px] text-neutral-400 font-black uppercase tracking-wider mr-1 sm:block hidden">Select:</span>
+                      <span className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider mr-1 sm:block hidden">Select:</span>
                       <Button
                         size="sm"
                         variant="outline"
@@ -421,14 +421,14 @@ export default function CleanupPage() {
 
                   {/* Group Card Files List */}
                   {isExpanded && (
-                    <div className="divide-y divide-neutral-100 dark:divide-neutral-800">
+                    <div className="divide-y divide-border/30 dark:divide-border/30">
                       {group.files.map((file) => {
                         const isChecked = !!selectedFiles[file.file_id];
                         
                         return (
                           <div 
                             key={file.file_id}
-                            className={`p-4 flex items-center justify-between gap-4 transition-colors ${isChecked ? 'bg-rose-500/5 dark:bg-rose-500/5' : 'hover:bg-neutral-50/50 dark:hover:bg-neutral-900/10'}`}
+                            className={`p-4 flex items-center justify-between gap-4 transition-colors ${isChecked ? 'bg-rose-500/5 dark:bg-rose-500/5' : 'hover:bg-surface-1/50 dark:hover:bg-card/10'}`}
                           >
                             <div className="flex items-center space-x-3 min-w-0">
                               <input
@@ -436,16 +436,16 @@ export default function CleanupPage() {
                                 id={`check-${file.file_id}`}
                                 checked={isChecked}
                                 onChange={() => toggleFileSelection(file.file_id)}
-                                className="w-4.5 h-4.5 rounded border-neutral-300 dark:border-neutral-700 text-rose-600 focus:ring-rose-500 shrink-0 cursor-pointer"
+                                className="w-4.5 h-4.5 rounded border-border/50 dark:border-border/50 text-rose-600 focus:ring-rose-500 shrink-0 cursor-pointer"
                               />
                               <div className="min-w-0 space-y-1">
                                 <label
                                   htmlFor={`check-${file.file_id}`}
-                                  className="text-xs md:text-sm font-semibold text-neutral-700 dark:text-neutral-300 break-all hover:text-neutral-900 cursor-pointer flex items-center space-x-1"
+                                  className="text-xs md:text-sm font-semibold text-muted-foreground/80 dark:text-muted-foreground/40 break-all hover:text-foreground cursor-pointer flex items-center space-x-1"
                                 >
                                   <span>{file.filename}</span>
                                 </label>
-                                <div className="flex items-center flex-wrap gap-x-2 gap-y-1 text-xs text-neutral-400">
+                                <div className="flex items-center flex-wrap gap-x-2 gap-y-1 text-xs text-muted-foreground/60">
                                   <span className="flex items-center space-x-1">
                                     <FolderOpen size={12} className="shrink-0" />
                                     <span className="truncate max-w-[120px] md:max-w-[240px]">{file.virtual_path}</span>
@@ -465,7 +465,7 @@ export default function CleanupPage() {
                             <div className="shrink-0">
                               <Link 
                                 href={`/files?path=${encodeURIComponent(file.virtual_path === '/' ? '' : file.virtual_path)}`}
-                                className="p-2 text-neutral-400 hover:text-primary rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 block transition-colors"
+                                className="p-2 text-muted-foreground/60 hover:text-primary rounded-lg hover:bg-surface-2 dark:hover:bg-surface-2 block transition-colors"
                                 title="Go to folder"
                               >
                                 <ExternalLink size={16} />
@@ -486,9 +486,9 @@ export default function CleanupPage() {
       {/* 5. FLOATING BULK MANUAL ACTIONS TOOLBAR */}
       {totalSelectedCount > 0 && (
         <div className="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-[100] animate-in slide-in-from-bottom duration-300">
-          <div className="flex items-center space-x-4 px-6 py-3 bg-neutral-950/90 dark:bg-neutral-900/90 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full text-white">
+          <div className="flex items-center space-x-4 px-6 py-3 bg-background/90 dark:bg-card/90 backdrop-blur-xl border border-white/10 shadow-2xl rounded-full text-white">
             <div className="flex items-center space-x-2 shrink-0">
-              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-rose-500 text-[10px] font-black text-white">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-rose-500 text-[10px] font-semibold text-white">
                 {totalSelectedCount}
               </span>
               <span className="text-xs font-bold tracking-tight">Files selected</span>
@@ -500,7 +500,7 @@ export default function CleanupPage() {
               <Button
                 size="sm"
                 variant="ghost"
-                className="h-8 text-xs font-bold text-neutral-400 hover:text-white hover:bg-white/5 rounded-full px-3"
+                className="h-8 text-xs font-bold text-muted-foreground/60 hover:text-white hover:bg-white/5 rounded-full px-3"
                 onClick={() => setSelectedFiles({})}
               >
                 Deselect All

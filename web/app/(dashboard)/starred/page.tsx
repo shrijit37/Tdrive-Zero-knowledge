@@ -131,15 +131,15 @@ export default function StarredPage() {
               <Star size={24} fill="currentColor" />
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl font-black tracking-tight">Starred</h1>
-              <p className="text-[10px] md:text-xs text-neutral-400 font-bold uppercase tracking-widest flex items-center">
+              <h1 className="text-xl md:text-2xl font-display font-bold tracking-tight">Starred</h1>
+              <p className="text-[11px] text-muted-foreground/60 font-semibold uppercase tracking-wider flex items-center">
                  Your Favorite Files
               </p>
             </div>
           </div>
 
           <div className="flex items-center space-x-2">
-            <div className="bg-neutral-100 dark:bg-neutral-800 p-1 rounded-xl flex">
+            <div className="bg-surface-2 dark:bg-surface-2 p-1 rounded-xl flex">
               <Button 
                 variant={viewMode === "grid" ? "outline" : "ghost"} 
                 size="sm" 
@@ -179,7 +179,7 @@ export default function StarredPage() {
         {isLoading ? (
           <div className="h-full flex flex-col items-center justify-center space-y-4 opacity-50">
             <Loader2 className="animate-spin text-primary" size={40} />
-            <p className="text-[10px] font-black uppercase tracking-[0.3em]">Loading Favorites...</p>
+            <p className="text-[11px] font-semibold uppercase tracking-wider">Loading Favorites...</p>
           </div>
         ) : filteredFiles.length > 0 ? (
           <div className={cn(
@@ -188,7 +188,7 @@ export default function StarredPage() {
           )}>
             {/* Table Header for List View */}
             {viewMode === "list" && (
-              <div className="hidden md:grid grid-cols-12 gap-3 px-4 py-2 text-[10px] font-black text-neutral-400 uppercase tracking-widest border-b mb-2">
+              <div className="hidden md:grid grid-cols-12 gap-3 px-4 py-2 text-[11px] font-semibold text-muted-foreground/60 uppercase tracking-wider border-b mb-2">
                 <div className="col-span-6 flex items-center">
                    <button onClick={handleSelectAll} className="mr-3 hover:text-primary transition-colors">
                       {selectedIds.length === filteredFiles.length ? <CheckSquare size={14} /> : <Square size={14} />}
@@ -214,12 +214,12 @@ export default function StarredPage() {
           </div>
         ) : (
           <div className="h-full flex flex-col items-center justify-center text-center space-y-6 animate-in fade-in zoom-in-95 duration-700">
-            <div className="w-24 h-24 bg-neutral-100 dark:bg-neutral-900 rounded-[2.5rem] flex items-center justify-center text-neutral-300 dark:text-neutral-800">
+            <div className="w-24 h-24 bg-surface-2 dark:bg-card rounded-xl flex items-center justify-center text-muted-foreground/40 dark:text-foreground">
               <Star size={48} strokeWidth={1} />
             </div>
             <div className="space-y-2">
               <h3 className="text-xl font-bold">No starred items yet</h3>
-              <p className="text-neutral-500 text-sm max-w-xs mx-auto font-medium">
+              <p className="text-muted-foreground text-sm max-w-xs mx-auto font-medium">
                 Add stars to items that you want to easily find later.
               </p>
             </div>

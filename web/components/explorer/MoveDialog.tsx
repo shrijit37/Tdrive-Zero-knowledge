@@ -166,10 +166,10 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
         <div 
           onClick={() => handleSelect(node.path)}
           className={cn(
-            "flex items-center space-x-2 py-2.5 px-3 rounded-2xl cursor-pointer transition-all active:scale-[0.98]",
-            isSelected 
-              ? "bg-primary text-white font-bold shadow-lg shadow-primary/25" 
-              : "hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-700 dark:text-neutral-300"
+            "flex items-center space-x-2 py-2.5 px-3 rounded-xl cursor-pointer transition-all active:scale-[0.98]",
+            isSelected
+              ? "bg-primary text-white font-bold shadow-lg shadow-primary/25"
+              : "hover:bg-surface-2 text-muted-foreground"
           )}
           style={{ paddingLeft: `${Math.max(12, depth * 16)}px` }}
         >
@@ -223,18 +223,18 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
       className="max-w-md max-h-[85vh]"
     >
       {/* Header */}
-      <div className="p-6 border-b border-neutral-100 dark:border-neutral-800 flex items-center justify-between shrink-0">
+      <div className="p-6 border-b border-border flex items-center justify-between shrink-0">
         <div className="space-y-1">
-          <h3 className="text-lg font-black tracking-tight leading-tight">
+          <h3 className="text-lg font-semibold tracking-tight leading-tight">
             {items.length === 1 ? "Move Item" : `Move ${items.length} Items`}
           </h3>
-          <p className="text-xs text-neutral-400 font-bold">
+          <p className="text-xs text-muted-foreground/60 font-bold">
             Select destination folder
           </p>
         </div>
-        <button 
+        <button
           onClick={onClose}
-          className="p-2 text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 rounded-full transition-colors"
+          className="p-2 text-muted-foreground/60 hover:bg-surface-2 rounded-full transition-colors"
         >
           <X size={20} />
         </button>
@@ -246,12 +246,12 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
           {/* Search Input */}
           <div className="px-6 pt-4 pb-2 shrink-0">
             <div className="relative">
-              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-neutral-400" />
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground/60" />
               <Input 
                 placeholder="Search folders..." 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-11 pr-4 h-11 rounded-xl border-neutral-200 focus:ring-primary/20 text-sm"
+                className="pl-11 pr-4 h-11 rounded-xl border-border focus:ring-primary/20 text-sm"
               />
             </div>
           </div>
@@ -259,7 +259,7 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
           {/* Folder Tree Scrollable Container */}
           <div className="flex-1 overflow-y-auto px-6 py-2 min-h-[200px] scrollbar-thin">
             {isLoading ? (
-              <div className="flex flex-col items-center justify-center py-12 text-neutral-400">
+              <div className="flex flex-col items-center justify-center py-12 text-muted-foreground/60">
                 <Loader2 className="animate-spin mb-2" size={28} />
                 <span className="text-xs font-bold">Loading folders...</span>
               </div>
@@ -276,14 +276,14 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
           </div>
 
           {/* Footer Actions */}
-          <div className="p-6 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between shrink-0 bg-neutral-50/50 dark:bg-neutral-900/10">
-            <span className="text-xs font-bold text-neutral-400 truncate max-w-[150px] sm:max-w-[180px]">
-              To: <span className="text-neutral-700 dark:text-neutral-200 font-black">{selectedPath === "/" ? "My Drive" : selectedPath}</span>
+          <div className="p-6 border-t border-border flex items-center justify-between shrink-0 bg-surface-1/50">
+            <span className="text-xs font-bold text-muted-foreground/60 truncate max-w-[150px] sm:max-w-[180px]">
+              To: <span className="text-foreground font-semibold">{selectedPath === "/" ? "My Drive" : selectedPath}</span>
             </span>
             <div className="flex space-x-2 shrink-0">
               <Button 
                 variant="ghost" 
-                className="rounded-xl h-11 px-4 font-bold text-neutral-500 text-xs"
+                className="rounded-xl h-11 px-4 font-bold text-muted-foreground text-xs"
                 onClick={onClose}
               >
                 Cancel
@@ -291,7 +291,7 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
               <Button 
                 variant="default" 
                 disabled={isInvalidDestination(selectedPath)}
-                className="rounded-xl h-11 px-6 font-bold shadow-lg shadow-primary/20 text-xs"
+                className="rounded-xl h-11 px-6 font-bold shadow-lg text-xs"
                 onClick={() => setShowConfirm(true)}
               >
                 Move Here
@@ -307,8 +307,8 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
           </div>
           
           <div className="space-y-2">
-            <h3 className="text-lg font-black tracking-tight">Confirm Move</h3>
-            <p className="text-sm text-neutral-500 font-medium leading-relaxed px-4">
+            <h3 className="text-lg font-semibold tracking-tight">Confirm Move</h3>
+            <p className="text-sm text-muted-foreground font-medium leading-relaxed px-4">
               {getConfirmationMessage()}
             </p>
           </div>
@@ -316,7 +316,7 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
           <div className="flex items-center justify-center space-x-3 pt-2">
             <Button 
               variant="ghost" 
-              className="rounded-xl h-12 px-6 font-bold text-neutral-500 text-xs"
+              className="rounded-xl h-12 px-6 font-bold text-muted-foreground text-xs"
               onClick={() => setShowConfirm(false)}
               disabled={isMoving}
             >
@@ -324,7 +324,7 @@ export function MoveDialog({ isOpen, onClose, items, currentPath }: MoveDialogPr
             </Button>
             <Button 
               variant="default" 
-              className="rounded-xl h-12 px-8 font-bold shadow-lg shadow-primary/15 text-xs"
+              className="rounded-xl h-12 px-8 font-bold shadow-lg text-xs"
               onClick={handleMove}
               disabled={isMoving}
             >

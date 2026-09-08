@@ -12,7 +12,7 @@ export interface DuplicateInfo {
     filename: string;
     virtual_path: string;
   };
-  vpath?: string; // Optional for UploadButton compatibility
+  vpath?: string;
 }
 
 interface DuplicateWarningDialogProps {
@@ -32,52 +32,51 @@ export function DuplicateWarningDialog({
 }: DuplicateWarningDialogProps) {
   return (
     <Dialog isOpen={!!duplicateInfo} onClose={onCancel}>
-      <div className="p-8 space-y-6 text-left">
-        <div className="flex items-center space-x-3 text-amber-500">
-          <div className="p-2 bg-amber-500/10 rounded-xl">
-            <AlertTriangle size={24} />
+      <div className="p-5 space-y-4 text-left">
+        <div className="flex items-center gap-2.5 text-status-warning">
+          <div className="p-1.5 bg-status-warning/10 rounded-md">
+            <AlertTriangle size={18} />
           </div>
-          <h3 className="text-lg font-black tracking-tight text-neutral-900 dark:text-white">Duplicate File Warning</h3>
+          <h3 className="text-base font-display font-bold tracking-tight text-foreground">Duplicate File</h3>
         </div>
 
-        <div className="space-y-3">
-          <p className="text-sm text-neutral-500 dark:text-neutral-400 font-medium">
-            A file with the exact same content (SHA256) already exists in your storage.
+        <div className="space-y-2.5">
+          <p className="text-sm text-muted-foreground">
+            A file with identical content (SHA-256) already exists in your storage.
           </p>
-          
-          <div className="p-4 bg-neutral-50 dark:bg-neutral-900/50 rounded-2xl border border-neutral-100 dark:border-neutral-800 space-y-2 text-xs">
+
+          <div className="p-3 bg-surface-1 rounded-lg border border-border/50 space-y-2 text-xs">
             <div>
-              <span className="font-bold text-neutral-400 uppercase tracking-wider block text-[9px]">File to upload</span>
-              <span className="font-bold text-neutral-800 dark:text-neutral-200 break-all">{duplicateInfo?.file.name}</span>
-              <span className="text-neutral-400 ml-1">({duplicateInfo ? formatSize(duplicateInfo.file.size) : ""})</span>
+              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider block">File to upload</span>
+              <span className="font-semibold text-foreground break-all">{duplicateInfo?.file.name}</span>
+              <span className="text-muted-foreground/50 ml-1 font-mono">({duplicateInfo ? formatSize(duplicateInfo.file.size) : ""})</span>
             </div>
-            
-            <div className="h-px bg-neutral-200 dark:bg-neutral-800 my-2" />
+
+            <div className="h-px bg-border/30" />
 
             <div>
-              <span className="font-bold text-neutral-400 uppercase tracking-wider block text-[9px]">Existing file location</span>
-              <span className="font-bold text-neutral-850 dark:text-neutral-200 break-all">{duplicateInfo?.existingFile.filename}</span>
-              <div className="text-neutral-400 mt-0.5 flex items-center space-x-1">
-                <span>Folder:</span>
-                <span className="underline italic">{duplicateInfo?.existingFile.virtual_path}</span>
+              <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider block">Existing file</span>
+              <span className="font-semibold text-foreground break-all">{duplicateInfo?.existingFile.filename}</span>
+              <div className="text-muted-foreground/60 mt-0.5 font-mono text-[10px]">
+                {duplicateInfo?.existingFile.virtual_path}
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1.5">
           <Button
             variant="default"
-            className="w-full rounded-xl font-bold h-11 flex items-center justify-center space-x-2 shadow-lg shadow-primary/10"
+            className="w-full h-9 flex items-center justify-center gap-2"
             onClick={onOpenExisting}
           >
             <span>Open Existing File</span>
-            <ExternalLink size={16} />
+            <ExternalLink size={13} />
           </Button>
-          
+
           <Button
             variant="outline"
-            className="w-full rounded-xl font-bold h-11 border-neutral-200 dark:border-neutral-800"
+            className="w-full h-9"
             onClick={onUploadAnyway}
           >
             Upload Anyway
@@ -85,7 +84,7 @@ export function DuplicateWarningDialog({
 
           <Button
             variant="ghost"
-            className="w-full rounded-xl font-bold h-11 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+            className="w-full h-9 text-muted-foreground"
             onClick={onCancel}
           >
             Cancel

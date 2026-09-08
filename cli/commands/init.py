@@ -19,6 +19,10 @@ def handle_init():
     api_id = typer.prompt("Enter Telegram API ID", type=int)
     api_hash = typer.prompt("Enter Telegram API Hash")
     channel_id = typer.prompt("Enter Private Channel ID (e.g. -100...)", type=int)
+    if channel_id >= 0:
+        console.print("[red]Error: Channel IDs must be negative (e.g. -1001234567890). "
+                       "You entered a user ID. Add @RawDataBot to your channel to find the correct ID.[/red]")
+        raise typer.Exit(1)
     
     password = typer.prompt("Set a Master Password (used for encryption)", hide_input=True, confirmation_prompt=True)
     

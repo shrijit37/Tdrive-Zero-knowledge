@@ -14,13 +14,13 @@ import { useRouter } from "next/navigation";
 
 export function Header() {
   const router = useRouter();
-  const { 
-    toggleDesktopSidebar, 
-    toggleMobileMenu, 
-    searchQuery, 
-    setSearchQuery 
+  const {
+    toggleDesktopSidebar,
+    toggleMobileMenu,
+    searchQuery,
+    setSearchQuery,
   } = useUIStore();
-  
+
   const { unreadCount } = useNotificationStore();
   const [isNotifOpen, setIsNotifOpen] = React.useState(false);
   const [isProfileOpen, setIsProfileOpen] = React.useState(false);
@@ -64,112 +64,114 @@ export function Header() {
   };
 
   return (
-    <header className="h-[52px] min-h-[52px] border-b bg-card/80 backdrop-blur-md flex items-center px-3 md:px-4 z-40 shrink-0 sticky top-0">
-      {/* 1. Brand & Toggle */}
-      <div className="flex items-center w-[50px] md:w-[200px] shrink-0">
-        <button 
+    <header className="h-11 min-h-[44px] border-b border-border/50 bg-card/70 backdrop-blur-md flex items-center px-2.5 md:px-3 z-40 shrink-0 sticky top-0">
+      {/* Brand & Toggle */}
+      <div className="flex items-center w-[40px] md:w-[180px] shrink-0">
+        <button
           onClick={() => {
             if (window.innerWidth < 768) toggleMobileMenu();
             else toggleDesktopSidebar();
           }}
-          className="p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors active:scale-90"
+          className="p-1.5 hover:bg-surface-2 rounded-md transition-colors duration-150 active:scale-[0.95]"
         >
-          <Menu size={18} className="text-neutral-600 dark:text-neutral-400" />
+          <Menu size={16} className="text-muted-foreground" />
         </button>
-        <div className="hidden md:flex items-center ml-3 space-x-2.5">
-          <div className="relative w-8 h-8 rounded-[10px] bg-gradient-to-br from-primary via-primary to-indigo-600 flex items-center justify-center shadow-lg shadow-primary/30 border border-primary/20 overflow-hidden group-hover:scale-105 transition-transform">
-            <div className="absolute top-0 right-0 w-4 h-4 bg-white/20 blur-[4px] rounded-full translate-x-1 -translate-y-1" />
-            <span className="relative text-white font-black text-sm tracking-tighter drop-shadow-md">T</span>
+        <div className="hidden md:flex items-center ml-2.5 gap-2">
+          {/* Logo mark — refined, no gradient, just accent color */}
+          <div className="relative w-7 h-7 rounded-lg bg-primary/15 flex items-center justify-center border border-primary/10 overflow-hidden">
+            <span className="relative text-primary font-display font-bold text-xs tracking-tight">T</span>
           </div>
-          <span className="font-black text-xl tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-neutral-800 to-neutral-500 dark:from-white dark:to-neutral-400">
+          <span className="font-display font-bold text-[15px] tracking-tight text-foreground">
             TDrive
           </span>
         </div>
       </div>
 
-      {/* 2. Focused Search Bar */}
-      <div className="flex-1 flex justify-center px-2 md:px-6">
-        <div className="relative w-full max-w-[640px] group">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-neutral-500 group-focus-within:text-primary transition-colors">
-            <Search size={16} />
+      {/* Search */}
+      <div className="flex-1 flex justify-center px-2 md:px-4">
+        <div className="relative w-full max-w-[520px] group">
+          <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-muted-foreground/60 group-focus-within:text-primary transition-colors duration-150">
+            <Search size={14} />
           </div>
           <input
             type="text"
-            placeholder="Search in TDrive"
-            className="w-full h-9 bg-neutral-100 dark:bg-neutral-800 border-none focus:bg-card focus:shadow-md focus:ring-1 focus:ring-neutral-200 dark:focus:ring-neutral-700 rounded-lg pl-10 pr-4 text-xs md:text-sm outline-none transition-all placeholder:text-neutral-500 font-medium"
+            placeholder="Search files..."
+            className="w-full h-8 bg-surface-1 border border-border/50 focus:bg-card focus:border-primary/30 focus:ring-1 focus:ring-ring/20 rounded-md pl-8 pr-3 text-xs outline-none transition-all duration-150 placeholder:text-muted-foreground/40 font-medium"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>
 
-      {/* 3. Global Actions */}
-      <div className="flex items-center justify-end w-[50px] md:w-[200px] space-x-1.5 md:space-x-2 shrink-0">
-        {/* Notification Bell */}
+      {/* Actions */}
+      <div className="flex items-center justify-end w-[40px] md:w-[180px] space-x-0.5 shrink-0">
+        {/* Notifications */}
         <div className="relative">
-          <button 
+          <button
             onClick={() => setIsNotifOpen(true)}
-            className="p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors relative active:scale-90"
+            className="p-1.5 hover:bg-surface-2 rounded-md transition-colors duration-150 relative active:scale-[0.95]"
           >
-            <Bell size={18} className="text-neutral-600 dark:text-neutral-400" />
+            <Bell size={16} className="text-muted-foreground" />
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-3.5 h-3.5 bg-primary text-[7px] font-black text-primary-foreground rounded-full flex items-center justify-center border-2 border-card">
-                {unreadCount > 9 ? "9+" : unreadCount}
-              </span>
+              <span className="absolute top-1 right-1 w-2 h-2 bg-primary rounded-full border border-card" />
             )}
           </button>
           <NotificationCenter isOpen={isNotifOpen} onClose={() => setIsNotifOpen(false)} />
         </div>
 
-        <Link href="/settings" className="hidden md:flex p-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors active:scale-90 text-neutral-600 dark:text-neutral-400">
-          <SettingsIcon size={18} />
+        <Link
+          href="/settings"
+          className="hidden md:flex p-1.5 hover:bg-surface-2 rounded-md transition-colors duration-150 active:scale-[0.95] text-muted-foreground"
+        >
+          <SettingsIcon size={16} />
         </Link>
-        
+
+        {/* Profile */}
         <div className="relative" ref={profileRef}>
-          <button 
+          <button
             onClick={() => setIsProfileOpen(!isProfileOpen)}
-            className="flex items-center space-x-2 p-1 pr-2 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors active:scale-95 group"
+            className="flex items-center gap-1.5 p-1 hover:bg-surface-2 rounded-md transition-colors duration-150 active:scale-[0.97] group"
           >
-            <div className="w-8 h-8 bg-neutral-200 dark:bg-neutral-800 rounded-full flex items-center justify-center text-neutral-600 dark:text-neutral-300 border border-neutral-300/20 shadow-sm group-hover:border-primary/40 transition-colors overflow-hidden">
+            <div className="w-6 h-6 bg-surface-3 rounded-full flex items-center justify-center text-muted-foreground border border-border/50 group-hover:border-primary/30 transition-colors duration-150 overflow-hidden">
               {status?.telegram_profile_photo ? (
-                <img 
-                  src={status.telegram_profile_photo} 
-                  alt="Profile" 
+                <img
+                  src={status.telegram_profile_photo}
+                  alt="Profile"
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <User size={16} />
+                <User size={12} />
               )}
             </div>
             {status?.telegram_username && (
-              <span className="hidden md:block text-[12px] font-bold text-neutral-700 dark:text-neutral-300 truncate max-w-[100px]">
+              <span className="hidden md:block text-[11px] font-medium text-muted-foreground truncate max-w-[80px]">
                 {status.telegram_username}
               </span>
             )}
           </button>
 
           {isProfileOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-card border rounded-xl shadow-xl py-2 z-50 animate-in fade-in zoom-in-95 duration-100">
-              <div className="px-4 py-2 border-b mb-1">
-                <p className="text-[10px] font-black uppercase tracking-widest text-neutral-400">Connected as</p>
-                <p className="text-sm font-bold truncate">{status?.telegram_username || "Telegram User"}</p>
+            <div className="absolute right-0 mt-1.5 w-44 bg-card border border-border/50 rounded-lg shadow-overlay py-1 z-50 animate-slide-up">
+              <div className="px-3 py-2 border-b border-border/50">
+                <p className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Signed in as</p>
+                <p className="text-xs font-semibold text-foreground truncate mt-0.5">{status?.telegram_username || "Telegram User"}</p>
               </div>
-              
-              <Link 
-                href="/settings" 
+
+              <Link
+                href="/settings"
                 onClick={() => setIsProfileOpen(false)}
-                className="flex items-center px-4 py-2 text-sm hover:bg-neutral-100 dark:hover:bg-neutral-800 text-neutral-600 dark:text-neutral-300 transition-colors"
+                className="flex items-center gap-2 px-3 py-2 text-xs text-muted-foreground hover:bg-surface-2 hover:text-foreground transition-colors"
               >
-                <SettingsIcon size={16} className="mr-3" />
+                <SettingsIcon size={13} />
                 Settings
               </Link>
-              
-              <button 
+
+              <button
                 onClick={handleLogout}
-                className="w-full flex items-center px-4 py-2 text-sm hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 transition-colors"
+                className="w-full flex items-center gap-2 px-3 py-2 text-xs text-destructive hover:bg-destructive/10 transition-colors"
               >
-                <LogOut size={16} className="mr-3" />
-                Logout
+                <LogOut size={13} />
+                Sign out
               </button>
             </div>
           )}

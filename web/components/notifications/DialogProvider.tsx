@@ -31,59 +31,59 @@ export function DialogProvider() {
 
   const getIcon = () => {
     switch (dialog?.type) {
-      case "confirm": return <HelpCircle className="text-primary" size={24} />;
-      case "alert": return <AlertCircle className="text-destructive" size={24} />;
-      default: return <Info className="text-blue-500" size={24} />;
+      case "confirm": return <HelpCircle className="text-primary" size={20} />;
+      case "alert": return <AlertCircle className="text-destructive" size={20} />;
+      default: return <Info className="text-primary" size={20} />;
     }
   };
 
   return (
-    <Dialog 
-      isOpen={!!dialog?.isOpen} 
+    <Dialog
+      isOpen={!!dialog?.isOpen}
       onClose={handleCancel}
       className="max-h-[90vh]"
     >
-      <div className="p-8 space-y-6 overflow-y-auto">
-        <div className="flex items-start space-x-4">
-          <div className="p-3 bg-neutral-100 dark:bg-neutral-800 rounded-2xl shrink-0">
-             {getIcon()}
+      <div className="p-5 space-y-5 overflow-y-auto">
+        <div className="flex items-start gap-3">
+          <div className="p-2 bg-surface-2 rounded-lg shrink-0">
+            {getIcon()}
           </div>
-          <div className="space-y-2">
-            <h3 className="text-xl font-black tracking-tight leading-tight">{dialog?.title}</h3>
-            <p className="text-sm text-neutral-500 font-medium leading-relaxed">
+          <div className="space-y-1.5 min-w-0">
+            <h3 className="text-base font-display font-bold tracking-tight text-foreground leading-snug">{dialog?.title}</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed">
               {dialog?.message}
             </p>
           </div>
         </div>
 
         {dialog?.type === "prompt" && (
-          <div className="animate-in slide-in-from-top-2 duration-300">
-            <Input 
+          <div className="animate-slide-up">
+            <Input
               autoFocus
               placeholder={dialog.placeholder}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleConfirm()}
-              className="h-14 text-base px-6 rounded-2xl border-neutral-200 focus:ring-primary/20"
+              className="h-10 text-sm"
             />
           </div>
         )}
 
-        <div className="flex items-center justify-end space-x-3 pt-2">
+        <div className="flex items-center justify-end gap-2 pt-1">
           {dialog?.type !== "alert" && (
-            <Button 
-              variant="ghost" 
-              className="rounded-xl h-12 px-6 font-bold text-neutral-500"
+            <Button
+              variant="ghost"
+              className="h-8 px-4 text-sm text-muted-foreground"
               onClick={handleCancel}
             >
               {dialog?.cancelLabel}
             </Button>
           )}
-          <Button 
-            variant={dialog?.type === "alert" ? "default" : "default"} 
+          <Button
+            variant="default"
             className={cn(
-              "rounded-xl h-12 px-8 font-bold shadow-lg shadow-primary/10",
-              dialog?.type === "confirm" && dialog.title.toLowerCase().includes("delete") && "bg-destructive text-white hover:bg-destructive/90 shadow-destructive/10"
+              "h-8 px-5 text-sm",
+              dialog?.type === "confirm" && dialog.title.toLowerCase().includes("delete") && "bg-destructive text-destructive-foreground hover:bg-destructive/90"
             )}
             onClick={handleConfirm}
           >
@@ -92,11 +92,11 @@ export function DialogProvider() {
         </div>
       </div>
 
-      <button 
+      <button
         onClick={handleCancel}
-        className="absolute top-6 right-6 p-2 text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors"
+        className="absolute top-3 right-3 p-1.5 text-muted-foreground/40 hover:text-muted-foreground hover:bg-surface-2 rounded-md transition-colors duration-150"
       >
-        <X size={20} />
+        <X size={16} />
       </button>
     </Dialog>
   );

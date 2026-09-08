@@ -25,17 +25,17 @@ export const Button = React.forwardRef<
 >
 (({ className, variant = "default", size = "default", ...props }, ref) => {
   const variants = {
-    default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm shadow-primary/20",
-    outline: "border border-neutral-200 dark:border-neutral-800 bg-background hover:bg-neutral-50 dark:hover:bg-neutral-900 text-neutral-600 dark:text-neutral-400",
-    ghost: "hover:bg-neutral-100 dark:hover:bg-neutral-800",
+    default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
+    outline: "border border-border bg-transparent hover:bg-accent text-muted-foreground",
+    ghost: "hover:bg-accent text-muted-foreground hover:text-foreground",
     link: "text-primary underline-offset-4 hover:underline",
-    destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm shadow-destructive/20",
+    destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
   };
 
   const sizes = {
-    default: "h-9 px-4",
-    sm: "h-8 rounded-md px-3 text-xs",
-    lg: "h-10 rounded-lg px-6 text-base",
+    default: "h-8 px-3.5",
+    sm: "h-7 px-2.5 text-[11px]",
+    lg: "h-9 px-5 text-sm",
     icon: "h-8 w-8",
   };
 
@@ -43,7 +43,7 @@ export const Button = React.forwardRef<
     <button
       ref={ref}
       className={cn(
-        "inline-flex items-center justify-center rounded-lg text-xs font-bold transition-all focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 active:scale-95",
+        "inline-flex items-center justify-center rounded-md text-xs font-semibold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.97]",
         variants[variant],
         sizes[size],
         className
@@ -58,9 +58,9 @@ Button.displayName = "Button";
 
 export function Progress({ value, className }: { value: number; className?: string }) {
   return (
-    <div className={cn("relative h-1.5 w-full overflow-hidden rounded-full bg-neutral-100 dark:bg-neutral-800", className)}>
+    <div className={cn("relative h-1 w-full overflow-hidden rounded-full bg-surface-2", className)}>
       <div
-        className="h-full bg-primary transition-all duration-500 ease-out"
+        className="h-full bg-primary rounded-full transition-all duration-500 ease-out"
         style={{ width: `${value || 0}%` }}
       />
     </div>
@@ -75,7 +75,7 @@ export const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttribute
       <input
         type={type}
         className={cn(
-          "flex h-9 w-full rounded-lg border border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 px-3 py-1.5 text-xs transition-all file:border-0 file:bg-transparent file:text-xs file:font-medium placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary disabled:cursor-not-allowed disabled:opacity-50",
+          "flex h-8 w-full rounded-md border border-border bg-surface-1 px-3 py-1.5 text-xs transition-colors file:border-0 file:bg-transparent file:text-xs file:font-medium placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring/30 focus:border-primary/50 disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         ref={ref}
@@ -169,7 +169,7 @@ export const FormLabel = React.forwardRef<
     <label
       ref={ref}
       className={cn(
-        "text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+        "text-[11px] font-medium text-muted-foreground leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
         error && "text-destructive",
         className
       )}
