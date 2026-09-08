@@ -5,6 +5,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install
 
+RUN mkdir -p public
 COPY . .
 
 ENV NEXT_PUBLIC_API_URL=/api/v1
@@ -18,7 +19,6 @@ WORKDIR /app
 ENV NODE_ENV=production
 
 COPY --from=builder /app/next.config.mjs ./
-RUN mkdir -p /app/public
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
