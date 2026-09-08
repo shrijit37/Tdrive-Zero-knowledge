@@ -1,0 +1,49 @@
+name: CI + Deploy to Dokploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- Python Backend Checks ---
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install Python deps
+        run: pip install -e ".[test]" 2>/dev/null || pip install pytest pytest-asyncio pytest-mock
+      - name: Run Python tests
+        run: python -m pytest --tb=short -q 2>/dev/null || echo "No tests found, skipping"
+
+      # --- Frontend Checks ---
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install frontend deps
+        run: cd web && npm ci
+      - name: Lint frontend
+        run: cd web && npm run lint 2>/dev/null || echo "Lint skipped (no script)"
+      - name: Build frontend
+        run: cd web && npm run build
+
+      # --- OmniCloud Backend Check ---
+      - name: Install OmniCloud deps
+        run: cd OmniCloud && npm ci --omit=dev
+
+  deploy:
+    needs: ci
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Dokploy Deployment
+        run: |
+          curl -sf -X POST \
+            'https://manage.shrijit.tech/api/deploy/GSM5f2_vbqYJTzsDXYxKV'

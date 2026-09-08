@@ -1,0 +1,79 @@
+services:
+  # TDrive Backend (FastAPI Agent)
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/api.Dockerfile
+    restart: always
+    volumes:
+      - ${TDRIVE_DATA:-/data/tdrive}:/root/.tdrive
+    environment:
+      - TDRIVE_CONFIG_DIR=/root/.tdrive
+    expose:
+      - "8000"
+    networks:
+      - dokploy-network
+
+  # TDrive Frontend (Next.js)
+  web:
+    build:
+      context: ./web
+      dockerfile: ../docker/web.Dockerfile
+    restart: always
+    environment:
+      - NEXT_PUBLIC_API_URL=/api/v1
+    expose:
+      - "3000"
+    networks:
+      - dokploy-network
+
+  # OmniCloud Backend (Express — multi-cloud engine)
+  omnicloud:
+    build:
+      context: ./OmniCloud
+      dockerfile: backend/Dockerfile
+    restart: always
+    environment:
+      - PORT=8787
+      - DATABASE_PATH=/app/data/omnicloud.db
+      - APP_MODE=${APP_MODE:-local}
+      - CORS_ORIGIN=${CORS_ORIGIN:-http://localhost}
+      - FRONTEND_URL=${FRONTEND_URL:-http://localhost}
+      - OMNICLOUD_SECRET_HALF=${OMNICLOUD_SECRET_HALF}
+      - INTERNAL_BRIDGE_SECRET=${INTERNAL_BRIDGE_SECRET}
+      - SYNC_INTERVAL_MINUTES=5
+    volumes:
+      - omnicloud_data:/app/data
+    expose:
+      - "8787"
+    networks:
+      - dokploy-network
+
+  # Nginx Reverse Proxy (unified origin for all services)
+  proxy:
+    image: nginx:alpine
+    restart: always
+    volumes:
+      - ./deploy/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./deploy/nginx/conf.d:/etc/nginx/conf.d:ro
+    depends_on:
+      - api
+      - web
+      - omnicloud
+    ports:
+      - "80"
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.tdrive.rule=Host(`${DOMAIN:-localhost}`)"
+      - "traefik.http.routers.tdrive.entrypoints=websecure"
+      - "traefik.http.routers.tdrive.tls.certResolver=letsencrypt"
+      - "traefik.http.services.tdrive.loadbalancer.server.port=80"
+
+networks:
+  dokploy-network:
+    external: true
+
+volumes:
+  omnicloud_data:
