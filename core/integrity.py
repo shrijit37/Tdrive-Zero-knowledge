@@ -48,11 +48,10 @@ class IntegrityGuard:
             return None
         
         salt = config.get("master_salt", "")
-        channel_id = str(config.get("channel_id", ""))
         machine_id = self.get_machine_id()
-        
-        # Identity = Salt + Channel + Hardware
-        raw = f"{salt}:{channel_id}:{machine_id}"
+
+        # Identity = Salt + Storage Target + Hardware
+        raw = f"{salt}:saved_messages:{machine_id}"
         return hashlib.sha256(raw.encode()).hexdigest()
 
     def is_ci_environment(self) -> bool:

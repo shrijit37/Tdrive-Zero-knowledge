@@ -4,6 +4,7 @@ from core.session import SessionManager
 from core.db.session import DatabaseSession
 from core.db.manager import DBManager
 from core.client import TDriveClient
+from core.manager import TDriveManager
 
 console = Console()
 
@@ -38,7 +39,7 @@ async def handle_rm(file_id: str):
             
             if msg_ids:
                 console.print(f"Deleting {len(msg_ids)} chunks from Telegram...")
-                await tg_client.delete_messages(config["channel_id"], msg_ids)
+                await tg_client.delete_messages(TDriveManager.STORAGE_TARGET, msg_ids)
             
             db.delete_file(file_id)
             console.print("[bold green]File successfully removed.[/bold green]")

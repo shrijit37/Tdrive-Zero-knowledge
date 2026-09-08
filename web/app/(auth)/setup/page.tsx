@@ -26,7 +26,6 @@ export default function SetupPage() {
   const [initForm, setInitForm] = React.useState({
     api_id: "",
     api_hash: "",
-    channel_id: "",
     master_password: "",
     confirm_password: "",
   });
@@ -66,7 +65,6 @@ export default function SetupPage() {
       await api.post("/bootstrap/init", {
         api_id: parseInt(initForm.api_id),
         api_hash: initForm.api_hash,
-        channel_id: parseInt(initForm.channel_id),
         master_password: initForm.master_password,
       });
       toast.success("System initialized!");
@@ -190,18 +188,6 @@ export default function SetupPage() {
                   />
                 </div>
               </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[11px] font-medium text-muted-foreground">Storage Channel ID</label>
-                <Input
-                  required
-                  placeholder="-100123456789"
-                  value={initForm.channel_id}
-                  onChange={(e) => setInitForm({ ...initForm, channel_id: e.target.value })}
-                />
-              </div>
-
-              <div className="h-px bg-border/50" />
 
               <div className="space-y-1.5">
                 <label className="text-[11px] font-medium text-primary">Master Password</label>

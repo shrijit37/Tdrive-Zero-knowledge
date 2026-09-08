@@ -43,7 +43,7 @@ async def initialize_system(
         )
     
     try:
-        service.initialize_config(req.api_id, req.api_hash, req.channel_id, req.master_password)
+        service.initialize_config(req.api_id, req.api_hash, req.master_password)
         
         from api.dependencies import get_db_session
         from core.session import SessionManager

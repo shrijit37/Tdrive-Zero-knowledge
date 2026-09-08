@@ -238,7 +238,6 @@ async def get_manager(
     manager = TDriveManager(
         db,
         tg,
-        config["channel_id"],
         _state.master_password,
         bytes.fromhex(config["master_salt"]),
         upload_locks=_state.upload_locks
@@ -268,7 +267,6 @@ async def get_manager_by_ticket(
     return TDriveManager(
         db,
         tg,
-        config["channel_id"],
         _state.master_password,
         bytes.fromhex(config["master_salt"]),
         upload_locks=_state.upload_locks

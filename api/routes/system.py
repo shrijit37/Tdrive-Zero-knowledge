@@ -243,7 +243,7 @@ async def rebuild_index(
     full: bool = False
 ):
     from core.recovery import RecoveryEngine
-    engine = RecoveryEngine(manager.db_session, manager.tg_client, manager.channel_id, master_password=manager.master_password, session_manager=sm)
+    engine = RecoveryEngine(manager.db_session, manager.tg_client, master_password=manager.master_password, session_manager=sm)
     stats = await engine.rebuild_index(full=full)
     
     if stats["errors"] > 0 and stats["recovered_chunks"] == 0:
@@ -260,7 +260,7 @@ async def audit_integrity(
     sm: Annotated[SessionManager, Depends(get_session_manager)]
 ):
     from core.recovery import RecoveryEngine
-    engine = RecoveryEngine(manager.db_session, manager.tg_client, manager.channel_id, session_manager=sm)
+    engine = RecoveryEngine(manager.db_session, manager.tg_client, session_manager=sm)
     report = await engine.audit_integrity()
     return StructuredResponse(success=True, data=report)
 
@@ -276,7 +276,7 @@ async def cleanup_system(
     async def perform_cleanup(mgr: TDriveManager, s_mgr: SessionManager):
         from core.recovery import RecoveryEngine
         try:
-            engine = RecoveryEngine(mgr.db_session, mgr.tg_client, mgr.channel_id, master_password=mgr.master_password, session_manager=s_mgr)
+            engine = RecoveryEngine(mgr.db_session, mgr.tg_client, master_password=mgr.master_password, session_manager=s_mgr)
             deleted_count = await engine.cleanup_orphans()
             logging.info(f"Background cleanup completed: {deleted_count} orphans removed.")
         except Exception as e:

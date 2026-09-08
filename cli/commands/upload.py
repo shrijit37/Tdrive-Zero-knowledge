@@ -34,10 +34,9 @@ async def handle_upload(path_str: str, virtual_path: str):
         return
 
     manager = TDriveManager(
-        db_session, 
-        tg_client, 
-        config["channel_id"], 
-        password, 
+        db_session,
+        tg_client,
+        password,
         bytes.fromhex(config["master_salt"])
     )
     

@@ -113,6 +113,15 @@ class DBManager:
         stmt = select(FileModel).where(FileModel.file_uuid == file_uuid)
         return self.session.execute(stmt).scalar_one_or_none()
 
+    def get_file_by_path_and_name(self, virtual_path: str, filename: str) -> Optional[FileModel]:
+        """Retrieves a file by its virtual path and filename."""
+        stmt = select(FileModel).where(
+            FileModel.virtual_path == virtual_path,
+            FileModel.filename == filename,
+            FileModel.is_trashed == False,
+        )
+        return self.session.execute(stmt).scalar_one_or_none()
+
     def list_files(self, virtual_path: Optional[str] = None, include_trashed: bool = False, provider: Optional[str] = None) -> List[FileModel]:
         """Lists all files/folders, filtered by path. Folders appear first."""
         from sqlalchemy import or_
@@ -211,9 +220,9 @@ class DBManager:
         file_id: str,
         sequence: int,
         msg_id: int,
-        channel_id: int,
-        chunk_size: int,
-        chunk_sha256: str,
+        channel_id: str = "me",
+        chunk_size: int = 0,
+        chunk_sha256: str = "",
     ) -> ChunkModel:
         """Adds a chunk record for a file."""
         chunk_record = ChunkModel(
@@ -316,16 +325,7 @@ class DBManager:
 
     def item_exists_in_destination(self, filename: str, destination: str) -> bool:
         """Checks if an active item with the same name exists in the destination."""
-        dest = destination if destination else "/"
-        stmt = select(FileModel).where(
-            and_(
-                FileModel.filename == filename,
-                FileModel.virtual_path == dest,
-                FileModel.is_trashed == False
-            )
-        )
-        result = self.session.execute(stmt).scalars().first()
-        return result is not None
+        return self.get_file_by_path_and_name(destination or "/", filename) is not None
 
     def get_children_by_path(self, path: str, include_trashed: bool = False) -> List[FileModel]:
         """Gets direct children of a folder path."""

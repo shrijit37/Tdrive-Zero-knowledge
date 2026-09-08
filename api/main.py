@@ -20,7 +20,7 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 
-from api.routes import auth, files, system, jobs, developer, trash, bootstrap, analytics, duplicates
+from api.routes import auth, files, system, jobs, developer, trash, bootstrap, analytics, duplicates, streaming, s3, telegram
 from api.schemas import StructuredResponse, ErrorDetail
 from api.dependencies import close_tg_client, get_manager_by_ticket, validate_csrf, download_tickets, validate_integrity, _state
 from core.manager import TDriveManager
@@ -82,10 +82,9 @@ async def trash_cleanup_worker():
                         tg = await get_tg_client(sm)
                         
                         manager = TDriveManager(
-                            db_session_factory, 
-                            tg, 
-                            config["channel_id"], 
-                            master_password="", 
+                            db_session_factory,
+                            tg,
+                            master_password="",
                             master_salt=bytes.fromhex(config["master_salt"]),
                             upload_locks=_state.upload_locks
                         )
@@ -174,10 +173,9 @@ async def materialization_worker():
                 # Use current master password if set in app state
                 if _state.master_password:
                     manager = TDriveManager(
-                        db_session_factory, 
-                        tg, 
-                        config["channel_id"], 
-                        _state.master_password, 
+                        db_session_factory,
+                        tg,
+                        _state.master_password,
                         bytes.fromhex(config["master_salt"]),
                         upload_locks=_state.upload_locks
                     )
@@ -420,6 +418,9 @@ app.include_router(jobs.router, prefix="/api/v1", dependencies=[Depends(validate
 app.include_router(developer.router, prefix="/api/v1", dependencies=[Depends(validate_csrf), Depends(validate_integrity)])
 app.include_router(analytics.router, prefix="/api/v1", dependencies=[Depends(validate_csrf), Depends(validate_integrity)])
 app.include_router(duplicates.router, prefix="/api/v1", dependencies=[Depends(validate_csrf), Depends(validate_integrity)])
+app.include_router(streaming.router, prefix="/api/v1", dependencies=[Depends(validate_csrf), Depends(validate_integrity)])
+app.include_router(s3.router, prefix="/api/v1", dependencies=[Depends(validate_csrf), Depends(validate_integrity)])
+app.include_router(telegram.router, prefix="/api/v1", dependencies=[Depends(validate_csrf), Depends(validate_integrity)])
 
 @app.get("/")
 async def root():

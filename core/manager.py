@@ -31,7 +31,7 @@ from core.utils import (
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_CHUNK_SIZE = 20 * 1024 * 1024 
+DEFAULT_CHUNK_SIZE = 20 * 1024 * 1024
 
 
 class ManagerError(Exception):
@@ -44,11 +44,13 @@ class TDriveManager:
     Orchestrates file operations between local storage, SQLite, and Telegram.
     """
 
+    # Saved Messages target — all Telegram storage goes to /me
+    STORAGE_TARGET = "me"
+
     def __init__(
         self,
         db_session: DatabaseSession,
         tg_client: TDriveClient,
-        channel_id: int,
         master_password: str,
         master_salt: bytes,
         upload_locks: Optional[Dict[str, asyncio.Lock]] = None
@@ -58,7 +60,6 @@ class TDriveManager:
         """
         self.db_session = db_session
         self.tg_client = tg_client
-        self.channel_id = channel_id
         self.master_password = master_password
         self.master_salt = master_salt
         self.key = derive_key(master_password, master_salt)
@@ -246,7 +247,7 @@ class TDriveManager:
                     
                     try:
                         message = await self.tg_client.send_document(
-                            self.channel_id,
+                            self.STORAGE_TARGET,
                             encrypted_blob,
                             caption=caption
                         )
@@ -264,7 +265,7 @@ class TDriveManager:
                             file_id=file_id,
                             sequence=seq,
                             msg_id=message.id,
-                            channel_id=self.channel_id,
+                            channel_id=self.STORAGE_TARGET,
                             chunk_size=len(encrypted_blob),
                             chunk_sha256=chunk_sha256
                         )
@@ -450,7 +451,7 @@ class TDriveManager:
                     caption = f"tdrive:{metadata}"
                     
                     message = await self.tg_client.send_document(
-                        self.channel_id,
+                        self.STORAGE_TARGET,
                         encrypted_blob,
                         caption=caption
                     )
@@ -462,7 +463,7 @@ class TDriveManager:
                             file_id=temp_fid,
                             sequence=current_seq,
                             msg_id=message.id,
-                            channel_id=self.channel_id,
+                            channel_id=self.STORAGE_TARGET,
                             chunk_size=len(encrypted_blob),
                             chunk_sha256=chunk_sha256
                         )
@@ -570,7 +571,7 @@ class TDriveManager:
             temp_chunk_path = Path(tmp_name)
             
             try:
-                msg = await self.tg_client.get_message(self.channel_id, msg_id)
+                msg = await self.tg_client.get_message(self.STORAGE_TARGET, msg_id)
                 if not msg:
                     raise ManagerError(f"Message {msg_id} not found on Telegram.")
                 
@@ -656,7 +657,7 @@ class TDriveManager:
                     logger.error(f"Error calling OmniCloud delete API: {e}")
             elif msg_ids:
                 try:
-                    await self.tg_client.delete_messages(self.channel_id, msg_ids)
+                    await self.tg_client.delete_messages(self.STORAGE_TARGET, msg_ids)
                 except Exception as e:
                     logger.error(f"Failed to delete chunks from Telegram: {e}")
 

@@ -2,6 +2,10 @@
 PLAN.md
 docs/temp_plans/
 
+# Claude Code artifacts
+.claude/
+.superpowers/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -49,6 +53,7 @@ deploy/certs/*.crt
 deploy/*.service
 scripts/*.sh
 !scripts/*.template
+!scripts/validate.sh
 !deploy/*.template
 
 # OS specific files

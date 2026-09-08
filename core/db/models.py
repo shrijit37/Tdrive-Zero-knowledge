@@ -76,7 +76,7 @@ class ChunkModel(Base):
     file_id: Mapped[str] = mapped_column(String(64), ForeignKey("files.file_id", ondelete="CASCADE"), nullable=False, index=True)
     sequence: Mapped[int] = mapped_column(Integer, nullable=False)
     msg_id: Mapped[int] = mapped_column(Integer, nullable=False)
-    channel_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    channel_id: Mapped[str] = mapped_column(String(64), nullable=False, default="me")
     chunk_size: Mapped[int] = mapped_column(Integer, nullable=False)
     chunk_sha256: Mapped[str] = mapped_column(String(64), nullable=False)
 

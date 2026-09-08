@@ -16,6 +16,9 @@ import {
   Sparkles,
   Server,
   Cloud,
+  Signal,
+  HardDrive,
+  Film,
 } from "lucide-react";
 import { useUIStore } from "@/store/useUIStore";
 import { cn } from "@/components/ui";
@@ -42,6 +45,7 @@ export function Sidebar({ isMobile = false }: SidebarProps) {
 
   const navItems = [
     { name: "My Files", href: "/files", icon: Files, kbd: null },
+    { name: "Streams", href: "/streams", icon: Film, kbd: null },
     { name: "OmniCloud", href: "/omnicloud", icon: Cloud, kbd: null },
     { name: "Analytics", href: "/analytics", icon: BarChart3, kbd: null },
     { name: "Recent Tasks", href: "/jobs", icon: Clock, kbd: null },
@@ -50,6 +54,8 @@ export function Sidebar({ isMobile = false }: SidebarProps) {
     { name: "Cleanup", href: "/cleanup", icon: Sparkles, kbd: null },
     { name: "Server", href: "/server", icon: Server, kbd: null },
     { name: "Settings", href: "/settings", icon: Settings, kbd: null },
+    { name: "Telegram", href: "/telegram", icon: Signal, kbd: null },
+    { name: "S3 Gateway", href: "/s3", icon: HardDrive, kbd: null },
     { name: "Developer", href: "/developer", icon: Terminal, kbd: null },
   ];
 

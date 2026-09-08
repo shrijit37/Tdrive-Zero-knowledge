@@ -33,7 +33,6 @@ class BootstrapStatus(BaseModel):
 class InitRequest(BaseModel):
     api_id: int
     api_hash: str
-    channel_id: int
     master_password: str
 
 class TGSendCodeRequest(BaseModel):

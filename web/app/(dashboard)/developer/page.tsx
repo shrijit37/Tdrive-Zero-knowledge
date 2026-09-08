@@ -736,8 +736,8 @@ function TelegramTab() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-8 relative z-10">
-           <MetricCard label="Virtual Hub" value={tgDiag?.channel_name || "Private"} />
-           <MetricCard label="Logical ID" value={String(tgDiag?.channel_id || "...")} />
+           <MetricCard label="Storage Target" value={tgDiag?.storage_target || "Saved Messages"} />
+           <MetricCard label="Account" value={tgDiag?.account || "..."} />
            <MetricCard label="Ping" value="~ 82 ms" />
         </div>
 

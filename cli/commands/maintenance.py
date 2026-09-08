@@ -25,7 +25,7 @@ def rebuild_index(full: bool = typer.Option(False, "--full", help="Perform a ful
         db_session = DatabaseSession(str(db_path))
         db_session.create_tables()
         
-        engine = RecoveryEngine(db_session, tg, config["channel_id"], master_password=password)
+        engine = RecoveryEngine(db_session, tg, master_password=password)
         
         console.print(f"[bold cyan]Starting {'full' if full else 'incremental'} index rebuild...[/bold cyan]")
         stats = await engine.rebuild_index(full=full)
@@ -55,7 +55,7 @@ def audit_integrity():
         db_path = sm.config_dir / "tdrive.db"
         db_session = DatabaseSession(str(db_path))
         
-        engine = RecoveryEngine(db_session, tg, config["channel_id"])
+        engine = RecoveryEngine(db_session, tg)
         
         console.print("[bold cyan]Auditing TDrive integrity...[/bold cyan]")
         report = await engine.audit_integrity()
@@ -85,7 +85,7 @@ def cleanup_system():
         db_path = sm.config_dir / "tdrive.db"
         db_session = DatabaseSession(str(db_path))
         
-        engine = RecoveryEngine(db_session, tg, config["channel_id"], master_password=password)
+        engine = RecoveryEngine(db_session, tg, master_password=password)
         
         console.print("[bold cyan]Cleaning orphaned chunks...[/bold cyan]")
         deleted = await engine.cleanup_orphans()

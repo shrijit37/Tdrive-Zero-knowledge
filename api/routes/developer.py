@@ -285,13 +285,11 @@ async def telegram_diagnostic(
 ):
     try:
         me = await manager.tg_client.client.get_me()
-        channel = await manager.tg_client.client.get_entity(manager.channel_id)
         return StructuredResponse(
             success=True,
             data={
                 "account": me.username or str(me.id),
-                "channel_name": channel.title,
-                "channel_id": manager.channel_id,
+                "storage_target": "me",
                 "connected": manager.tg_client.client.is_connected()
             }
         )
@@ -355,6 +353,6 @@ async def full_audit(
 ):
     """Performs a deep integrity audit."""
     from core.recovery import RecoveryEngine
-    engine = RecoveryEngine(manager.db_session, manager.tg_client, manager.channel_id, master_password=manager.master_password, session_manager=sm)
+    engine = RecoveryEngine(manager.db_session, manager.tg_client, master_password=manager.master_password, session_manager=sm)
     report = await engine.audit_integrity()
     return StructuredResponse(success=True, data=report)

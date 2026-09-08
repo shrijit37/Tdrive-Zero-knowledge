@@ -44,26 +44,19 @@ class BootstrapService:
             "session_path": str(session_file)
         }
 
-    def initialize_config(self, api_id: int, api_hash: str, channel_id: int, master_password: str) -> None:
+    def initialize_config(self, api_id: int, api_hash: str, master_password: str) -> None:
         """
         Creates the initial config.json and sets up encryption.
-        Telegram channel IDs are always negative (e.g. -100...); a positive
-        value is a user ID and will fail at upload time with a PeerUser error.
+        All Telegram storage targets Saved Messages (/me).
         """
-        if channel_id >= 0:
-            raise ValueError(
-                "Invalid channel ID: must be negative (e.g. -1001234567890). "
-                "You entered a user ID. Add @RawDataBot to your channel to see its numeric ID."
-            )
         master_salt = generate_salt().hex()
-        
+
         config = {
             "api_id": api_id,
             "api_hash": api_hash,
-            "channel_id": channel_id,
             "master_salt": master_salt
         }
-        
+
         self.sm.save_config(config)
         self.sm.setup_password_verification(master_password)
 

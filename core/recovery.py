@@ -9,6 +9,7 @@ import base64
 import json
 import logging
 import os
+import re
 import shutil
 import time
 import zipfile
@@ -60,16 +61,40 @@ class MetadataV1Parser(MetadataParser):
             logger.debug(f"Failed to parse metadata: {e}")
             return None
 
+class PstreamCaptionParser:
+    """
+    Parses pstream-style captions: '{profile}/{stem}' or '{profile}/{stem}_part{NNN}'.
+    These are existing videos in Saved Messages that predate Tdrive's v1 caption format.
+    """
+    def parse(self, text: str) -> Optional[Dict[str, Any]]:
+        if not text or text.startswith("tdrive:") or text.startswith("ts3:"):
+            return None
+        # tstream: prefixed (new format) — return None to avoid double-counting
+        if text.startswith("tstream:"):
+            return None
+        # Pattern: profile/stem_partNNN  OR  profile/stem
+        match = re.match(r'^([a-zA-Z0-9_-]+)/(.+?)(?:_part(\d+))?$', text)
+        if not match:
+            return None
+        profile, stem, part = match.groups()
+        return {
+            "type": "pstream",
+            "profile": profile,
+            "stem": stem,
+            "part": int(part) if part else 1,
+        }
+
+
 class RecoveryEngine:
     """
     Handles index rebuilding and integrity maintenance.
     """
 
-    def __init__(self, db_session: DatabaseSession, tg_client: TDriveClient, channel_id: int, master_password: Optional[str] = None, session_manager: Optional[Any] = None):
+    def __init__(self, db_session: DatabaseSession, tg_client: TDriveClient, master_password: Optional[str] = None, session_manager: Optional[Any] = None):
         self.db_session = db_session
         self.tg_client = tg_client
-        self.channel_id = channel_id
         self.parser = MetadataV1Parser()
+        self.pstream_parser = PstreamCaptionParser()
         self.master_password = master_password
         if session_manager is not None:
             self.sm = session_manager
@@ -93,15 +118,15 @@ class RecoveryEngine:
 
         current_max_id = 0
         
-        logger.info(f"Starting rebuild scan on channel {self.channel_id} from msg_id > {last_id}")
-        
+        logger.info(f"Starting rebuild scan on Saved Messages from msg_id > {last_id}")
+
         # 1. Initialize local key if possible
         if self.master_password:
             local_salt = self.sm.get_salt()
             if local_salt:
                 self.key = derive_key(self.master_password, bytes.fromhex(local_salt))
 
-        async for message in self.tg_client.client.iter_messages(self.channel_id, min_id=last_id):
+        async for message in self.tg_client.client.iter_messages("me", min_id=last_id):
             stats["scanned"] += 1
             current_max_id = max(current_max_id, message.id)
             
@@ -129,6 +154,18 @@ class RecoveryEngine:
                             logger.error("Failed to sync local salt. Integrity check blocked.")
 
             if not meta:
+                # Check for pstream-style legacy captions (profile/stem[_partNNN])
+                pstream_meta = self.pstream_parser.parse(message.text)
+                if pstream_meta:
+                    try:
+                        chunk_recovered = self._process_pstream_chunk(pstream_meta, message)
+                        if chunk_recovered:
+                            stats["recovered_chunks"] += 1
+                            if stats["recovered_chunks"] % 10 == 0:
+                                logger.info(f"Recovered {stats['recovered_chunks']} chunks so far...")
+                    except Exception as e:
+                        logger.error(f"Error recovering pstream message {message.id}: {e}")
+                        stats["errors"] += 1
                 continue
 
             try:
@@ -197,26 +234,81 @@ class RecoveryEngine:
             existing_chunks = db.get_chunks(fid)
             if any(c.sequence == seq for c in existing_chunks):
                 return False
-                
-            db.add_chunk(
+
+            new_chunk = db.add_chunk(
                 chunk_id=uuid.uuid4().hex,
                 file_id=fid,
                 sequence=seq,
                 msg_id=message.id,
-                channel_id=self.channel_id,
+                channel_id="me",
                 chunk_size=message.file.size if message.file else 0,
-                chunk_sha256="unknown" 
+                chunk_sha256="unknown"
             )
-            session.flush() 
-            
-            all_chunks = db.get_chunks(fid)
-            actual_size = sum(max(0, c.chunk_size - 12) for c in all_chunks)
+            session.flush()
+
+            existing_chunks.append(new_chunk)
+            actual_size = sum(max(0, c.chunk_size - 12) for c in existing_chunks)
             file_rec.size = actual_size
 
-            if len(all_chunks) == tot:
+            if len(existing_chunks) == tot:
                 file_rec.status = "completed"
                 logger.info(f"File {file_rec.filename} fully reconstructed ({actual_size} bytes).")
                 
+            return True
+
+    def _process_pstream_chunk(self, meta: Dict[str, Any], message: Message) -> bool:
+        """
+        Create FileModel and ChunkModel records for pstream-style legacy videos.
+        These videos are stored unencrypted in Saved Messages with plain-text captions.
+        """
+        profile = meta["profile"]
+        stem = meta["stem"]
+        part = meta["part"]
+
+        # File ID is deterministic from profile+stem (dedup across scan runs)
+        fid = hashlib.sha256(f"pstream:{profile}/{stem}".encode()).hexdigest()[:64]
+        virtual_path = f"/streams/{profile}"
+
+        with self.db_session.get_session() as session:
+            db = DBManager(session)
+            file_rec = db.get_file(fid)
+
+            if not file_rec:
+                # Determine total parts from message count or defer
+                # For now, start with chunk_count=part and increment as we find more
+                file_rec = db.create_file_record(
+                    file_id=fid,
+                    file_uuid=uuid.uuid4().hex,
+                    filename=f"{stem}.mp4",
+                    virtual_path=virtual_path,
+                    size=0,
+                    sha256="pstream:legacy",
+                    chunk_count=part,  # Will be updated as parts are discovered
+                )
+                file_rec.status = "completed"
+                file_rec.storage_provider = "stream"
+                file_rec.is_materialized = False
+
+            existing_chunks = db.get_chunks(fid)
+            if any(c.sequence == part for c in existing_chunks):
+                return False
+
+            new_chunk = db.add_chunk(
+                chunk_id=uuid.uuid4().hex,
+                file_id=fid,
+                sequence=part - 1,  # 0-indexed
+                msg_id=message.id,
+                channel_id="me",
+                chunk_size=message.file.size if message.file else 0,
+                chunk_sha256="pstream:legacy",
+            )
+            session.flush()
+
+            # Reuse cached list + new chunk instead of re-querying
+            existing_chunks.append(new_chunk)
+            file_rec.chunk_count = len(existing_chunks)
+            file_rec.size = sum(max(0, c.chunk_size) for c in existing_chunks)
+
             return True
 
     async def audit_integrity(self) -> Dict[str, Any]:
@@ -241,7 +333,7 @@ class RecoveryEngine:
                 for c in db.get_chunks(f.file_id):
                     known_msg_ids.add(c.msg_id)
                     
-        async for message in self.tg_client.client.iter_messages(self.channel_id):
+        async for message in self.tg_client.client.iter_messages("me"):
             meta = self.parser.parse(message.text)
             if meta and message.id not in known_msg_ids:
                 orphans.append(message.id)
@@ -253,7 +345,7 @@ class RecoveryEngine:
         """
         orphan_ids = await self.detect_orphans()
         if orphan_ids:
-            await self.tg_client.delete_messages(self.channel_id, orphan_ids)
+            await self.tg_client.delete_messages("me", orphan_ids)
         return len(orphan_ids)
 
 # --- Backup Engine ---

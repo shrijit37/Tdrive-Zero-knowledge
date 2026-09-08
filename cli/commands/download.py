@@ -31,10 +31,9 @@ async def handle_download(file_id: str, output: str = None):
     await tg_client.connect()
     
     manager = TDriveManager(
-        db_session, 
-        tg_client, 
-        config["channel_id"], 
-        password, 
+        db_session,
+        tg_client,
+        password,
         bytes.fromhex(config["master_salt"])
     )
     

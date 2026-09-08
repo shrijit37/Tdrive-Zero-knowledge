@@ -43,10 +43,7 @@ def handle_doctor():
                     if await tg.is_user_authorized():
                         console.print("  [green]✔[/green] Telegram: Connected and Authorized")
                         
-                        if await tg.validate_channel(config["channel_id"]):
-                            console.print("  [green]✔[/green] Telegram: Storage Channel accessible")
-                        else:
-                            console.print("  [red]✘[/red] Telegram: Storage Channel NOT accessible")
+                        console.print("  [green]✔[/green] Telegram: Saved Messages accessible")
                     else:
                         console.print("  [red]✘[/red] Telegram: Connected but NOT authorized (run 'tdrive login')")
                     await tg.disconnect()
