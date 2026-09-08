@@ -24,6 +24,12 @@ RUN pip install --no-cache-dir \
     pytest-asyncio \
     pytest-mock
 
+# Install TDrive CLI so `tdrive init` is available
+RUN pip install --no-cache-dir -e .
+
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 8000
 
-CMD ["python", "-m", "api.main"]
+ENTRYPOINT ["/entrypoint.sh"]
