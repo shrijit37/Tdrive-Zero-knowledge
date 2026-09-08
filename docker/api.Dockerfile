@@ -12,6 +12,7 @@ COPY cli/ ./cli/
 COPY pyproject.toml .
 
 RUN pip install --no-cache-dir \
+    pycryptodome \
     cryptography \
     sqlalchemy \
     telethon \
@@ -20,9 +21,12 @@ RUN pip install --no-cache-dir \
     pyjwt \
     typer \
     rich \
-    pytest \
-    pytest-asyncio \
-    pytest-mock
+    pillow \
+    pillow-heif \
+    ffmpeg-python \
+    python-dotenv \
+    psutil \
+    slowapi
 
 # Install TDrive CLI so `tdrive init` is available
 RUN pip install --no-cache-dir -e .
