@@ -7,7 +7,7 @@ Defines the SQLAlchemy models for files and their associated chunks.
 from datetime import datetime, timezone
 from typing import List, Optional
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, String, Text, UniqueConstraint
+from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text, UniqueConstraint
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
 
@@ -95,7 +95,7 @@ class JobModel(Base):
     job_id: Mapped[str] = mapped_column(String(64), primary_key=True)
     type: Mapped[str] = mapped_column(String(20))  
     status: Mapped[str] = mapped_column(String(20), default="pending")  
-    progress: Mapped[float] = mapped_column(Integer, default=0)
+    progress: Mapped[float] = mapped_column(Float, default=0)
     total_size: Mapped[int] = mapped_column(Integer, default=0)
     current_size: Mapped[int] = mapped_column(Integer, default=0)
     file_id: Mapped[Optional[str]] = mapped_column(String(64), nullable=True)

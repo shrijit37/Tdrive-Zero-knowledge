@@ -27,11 +27,17 @@ from core.feature_registry import FeatureRegistry
 
 router = APIRouter(prefix="/system", tags=["system"])
 
-async def fetch_omnicloud_storage():
+def _omnicloud_config():
     import os
-    import httpx
     omnicloud_url = os.environ.get("OMNICLOUD_API_URL", "http://localhost:8787/api")
-    bridge_secret = os.environ.get("INTERNAL_BRIDGE_SECRET", "omnicloud-dev-bridge-secret")
+    bridge_secret = os.environ.get("INTERNAL_BRIDGE_SECRET")
+    if not bridge_secret:
+        raise HTTPException(status_code=500, detail="bridge secret not configured")
+    return omnicloud_url, bridge_secret
+
+async def fetch_omnicloud_storage():
+    import httpx
+    omnicloud_url, bridge_secret = _omnicloud_config()
     try:
         async with httpx.AsyncClient(timeout=3.0) as client:
             resp = await client.get(
@@ -440,10 +446,8 @@ async def get_service_logs(service_name: str, lines: int = 100):
 
 @router.get("/omnicloud/accounts", response_model=StructuredResponse[list])
 async def get_omnicloud_accounts():
-    import os
     import httpx
-    omnicloud_url = os.environ.get("OMNICLOUD_API_URL", "http://localhost:8787/api")
-    bridge_secret = os.environ.get("INTERNAL_BRIDGE_SECRET", "omnicloud-dev-bridge-secret")
+    omnicloud_url, bridge_secret = _omnicloud_config()
     try:
         async with httpx.AsyncClient(timeout=5.0) as client:
             resp = await client.get(
@@ -459,10 +463,8 @@ async def get_omnicloud_accounts():
 
 @router.delete("/omnicloud/accounts/{account_id}", response_model=StructuredResponse[dict])
 async def delete_omnicloud_account(account_id: str):
-    import os
     import httpx
-    omnicloud_url = os.environ.get("OMNICLOUD_API_URL", "http://localhost:8787/api")
-    bridge_secret = os.environ.get("INTERNAL_BRIDGE_SECRET", "omnicloud-dev-bridge-secret")
+    omnicloud_url, bridge_secret = _omnicloud_config()
     try:
         async with httpx.AsyncClient(timeout=5.0) as client:
             resp = await client.delete(
@@ -478,12 +480,10 @@ async def delete_omnicloud_account(account_id: str):
 
 @router.get("/omnicloud/connect/{provider}", response_model=StructuredResponse[str])
 async def connect_omnicloud_oauth(provider: str):
-    import os
     import httpx
     if provider not in ["google", "onedrive", "dropbox", "yandex"]:
         raise HTTPException(status_code=400, detail="Invalid OAuth provider")
-    omnicloud_url = os.environ.get("OMNICLOUD_API_URL", "http://localhost:8787/api")
-    bridge_secret = os.environ.get("INTERNAL_BRIDGE_SECRET", "omnicloud-dev-bridge-secret")
+    omnicloud_url, bridge_secret = _omnicloud_config()
     try:
         async with httpx.AsyncClient(timeout=5.0) as client:
             resp = await client.get(
@@ -507,12 +507,10 @@ async def connect_omnicloud_oauth(provider: str):
 
 @router.post("/omnicloud/connect/{provider}", response_model=StructuredResponse[dict])
 async def connect_omnicloud_credentials(provider: str, body: dict):
-    import os
     import httpx
     if provider not in ["mega", "s3", "pcloud"]:
         raise HTTPException(status_code=400, detail="Invalid credential provider")
-    omnicloud_url = os.environ.get("OMNICLOUD_API_URL", "http://localhost:8787/api")
-    bridge_secret = os.environ.get("INTERNAL_BRIDGE_SECRET", "omnicloud-dev-bridge-secret")
+    omnicloud_url, bridge_secret = _omnicloud_config()
     try:
         async with httpx.AsyncClient(timeout=5.0) as client:
             resp = await client.post(

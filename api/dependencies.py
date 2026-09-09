@@ -97,7 +97,7 @@ async def validate_csrf(
         referer = request.headers.get("Referer")
         
         if not origin and not referer:
-             pass 
+            raise HTTPException(status_code=403, detail="CSRF origin missing")
 
 def check_login_brute_force():
     """Checks if login is currently locked out or needs delay."""

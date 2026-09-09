@@ -636,21 +636,6 @@ class TDriveBotWorker:
             self._running = False
             self.username = None
 
-        try:
-            await self.client.start(bot_token=bot_token)
-            me = await self.client.get_me()
-            self.username = me.username
-            self._running = True
-            logger.info(f"BotWorker: Bot @{self.username} is now online.")
-            await self._register_commands()
-            await self.client.run_until_disconnected()
-        except Exception as e:
-            logger.error(f"BotWorker: Critical error: {e}")
-            self.username = None
-        finally:
-            self._running = False
-            self.username = None
-
     def _format_size(self, size: int) -> str:
         """Helper to format bytes to human readable string."""
         for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
